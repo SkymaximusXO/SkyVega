@@ -226,6 +226,55 @@
     .team-grid{ grid-template-columns:1fr; }
     .contact-card{ grid-template-columns:1fr; padding:40px 28px; }
   }
+  /* ---------- Modal / request form ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(6,8,11,0.72);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px; z-index:100; opacity:0; pointer-events:none; transition:opacity .25s;
+  }
+  .modal-overlay.open{ opacity:1; pointer-events:auto; }
+  .modal-panel{
+    background:var(--card); border:1px solid var(--card-border); border-radius:20px;
+    max-width:560px; width:100%; max-height:88vh; overflow-y:auto; padding:40px;
+    transform:translateY(16px) scale(.98); transition:transform .25s;
+  }
+  .modal-overlay.open .modal-panel{ transform:translateY(0) scale(1); }
+  .modal-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:8px; }
+  .modal-head h3{ font-size:26px; }
+  .modal-close{
+    background:none; border:1px solid var(--card-border); color:var(--text-dim);
+    width:34px; height:34px; border-radius:50%; font-size:16px; cursor:pointer; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; transition:.2s;
+  }
+  .modal-close:hover{ border-color:var(--accent-line); color:var(--text); }
+  .modal-sub{ color:var(--text-dim); font-size:14.5px; margin-bottom:28px; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:13px; font-weight:700; color:var(--text-dim); margin-bottom:8px; letter-spacing:.02em; }
+  .field textarea, .field input, .field select{
+    width:100%; background:var(--bg-soft); border:1px solid var(--card-border); border-radius:10px;
+    padding:13px 14px; color:var(--text); font-family:var(--sans); font-size:14.5px; transition:border-color .2s;
+  }
+  .field textarea{ min-height:96px; resize:vertical; }
+  .field textarea:focus, .field input:focus, .field select:focus{ outline:none; border-color:var(--accent-line); }
+  .field select{ appearance:none; -webkit-appearance:none; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .consent{ display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color:var(--text-dim); cursor:pointer; margin-bottom:8px; }
+  .consent input{ margin-top:3px; accent-color:var(--accent); width:16px; height:16px; flex-shrink:0; }
+  .consent u{ color:var(--text); }
+  .privacy-details{ font-size:13px; color:var(--text-faint); margin-bottom:22px; }
+  .privacy-details summary{ cursor:pointer; color:var(--accent); font-weight:600; }
+  .privacy-details p{ margin-top:8px; line-height:1.5; }
+  .form-submit{ width:100%; }
+  .form-status{ margin-top:14px; font-size:14px; text-align:center; display:none; }
+  .form-status.show{ display:block; }
+  .form-status.ok{ color:#7fd88f; }
+  .form-status.err{ color:#e07b7b; }
+  @media (max-width:520px){
+    .field-row{ grid-template-columns:1fr; }
+    .modal-panel{ padding:28px 22px; }
+  }
+
   @media (max-width: 720px){
     section{ padding:64px 0; }
     .hero{ padding:140px 0 60px; }
@@ -256,7 +305,7 @@
       <a href="#contact">Контакты</a>
     </nav>
     <div class="navcta">
-      <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+      <button type="button" class="btn btn-primary" data-open-modal>Обсудить проект</button>
       <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -272,7 +321,7 @@
       <div class="hero-sub">Люди · Технологии · Развитие</div>
       <p class="lede">Продуктовая команда полного цикла — от стратегии и позиционирования до готовой IT-разработки. Производим эталонный продукт для вашего бизнеса.</p>
       <div class="hero-ctas">
-        <a href="#contact" class="btn btn-primary">Обсудить проект</a>
+        <button type="button" class="btn btn-primary" data-open-modal>Обсудить проект</button>
         <a href="#process" class="btn btn-ghost">Как мы работаем</a>
       </div>
     </div>
@@ -489,6 +538,7 @@
           <p class="lede">Расскажите, что планируете запустить или изменить — предложим подход и состав команды под задачу.</p>
         </div>
         <div>
+          <button type="button" class="btn btn-primary" data-open-modal style="width:100%; margin-bottom:18px;">Обсудить проект</button>
           <div class="contact-links">
             <a href="mailto:info@skyvega.ru">Email · info@skyvega.ru <span class="arrow">→</span></a>
             <a href="https://t.me/skyvega" target="_blank" rel="noopener">Telegram · @skyvega <span class="arrow">→</span></a>
@@ -508,6 +558,50 @@
   </div>
 </footer>
 
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <h3 id="modalTitle">Обсудить проект</h3>
+      <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+    </div>
+    <p class="modal-sub">Расскажите о задаче — ответим и предложим состав команды под неё.</p>
+    <form id="projectForm">
+      <div class="field">
+        <label for="f-project">Расскажите о проекте</label>
+        <textarea id="f-project" name="project" placeholder="Кратко опишите задачу, идею или что хотите изменить" required></textarea>
+      </div>
+      <div class="field">
+        <label>Ваши контакты</label>
+        <div class="field-row">
+          <input type="text" name="name" placeholder="Имя" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="tel" name="phone" placeholder="Телефон">
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-source">Откуда вы о нас узнали?</label>
+        <select id="f-source" name="source">
+          <option value="">Выберите вариант</option>
+          <option>Поиск в интернете</option>
+          <option>Социальные сети</option>
+          <option>Рекомендация</option>
+          <option>Другое</option>
+        </select>
+      </div>
+      <label class="consent">
+        <input type="checkbox" name="consent" required>
+        <span>Я согласен(на) с <u>политикой обработки персональных данных</u></span>
+      </label>
+      <details class="privacy-details">
+        <summary>Что это значит?</summary>
+        <p>Мы используем контактные данные только для связи по вашей заявке и не передаём их третьим лицам. Полная версия политики будет опубликована отдельно.</p>
+      </details>
+      <button type="submit" class="btn btn-primary form-submit">Отправить заявку</button>
+      <p class="form-status" id="formStatus"></p>
+    </form>
+  </div>
+</div>
+
 <script>
   const burger = document.getElementById('burger');
   const navlinks = document.getElementById('navlinks');
@@ -519,6 +613,48 @@
     burger.classList.remove('open');
     navlinks.classList.remove('open');
   }));
+
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalClose = document.getElementById('modalClose');
+  const openTriggers = document.querySelectorAll('[data-open-modal]');
+  const projectForm = document.getElementById('projectForm');
+  const formStatus = document.getElementById('formStatus');
+
+  function openModal(){
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  openTriggers.forEach(btn => btn.addEventListener('click', openModal));
+  modalClose.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  projectForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formStatus.className = 'form-status show';
+    formStatus.textContent = 'Отправляем...';
+    const data = new FormData(projectForm);
+    data.append('_subject', 'Новая заявка с сайта СКАЙВЕГА');
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/maxim.nebov@googlemail.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data
+      });
+      if (!res.ok) throw new Error('bad response');
+      formStatus.className = 'form-status show ok';
+      formStatus.textContent = 'Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
+      projectForm.reset();
+      setTimeout(closeModal, 2200);
+    } catch (err) {
+      formStatus.className = 'form-status show err';
+      formStatus.textContent = 'Не получилось отправить. Напишите нам на info@skyvega.ru';
+    }
+  });
 </script>
 
 </body>

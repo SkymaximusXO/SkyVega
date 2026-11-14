@@ -33,7 +33,7 @@ If the One-Pager changes, the site should be re-synced to it.
 ## Known placeholders — do not treat as real data
 - Form target email `maxim.nebov@googlemail.com` — test address; swap for
   the company inbox. FormSubmit needs a one-time confirmation click.
-- Contacts: only the phone **+7 (917) 820 31 75** is shown (from One-Pager).
+- Contacts: only the phone **+7 (911) 979-06-07** is shown (founder, 2026-11-14; header, menu, contact, footer).
   Email and Telegram in the One-Pager are placeholders (`email@gmail.com`,
   `@telegram`), so they are NOT on the site — add when real ones exist
   (see TODO comment in the contact section).

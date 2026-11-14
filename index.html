@@ -228,16 +228,29 @@
   .aud-item p{ color:var(--text-dim); font-weight:300; font-size:16px; }
 
   /* team */
-  .team{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:22px; align-items:stretch; }
   .person{ display:grid; grid-template-columns:120px 1fr; gap:22px; padding:24px; border-radius:var(--r); background:var(--card); border:1px solid var(--line); }
   .person img{ width:120px; height:140px; object-fit:cover; border-radius:16px; }
   .person h3{ font-size:22px; margin-bottom:4px; }
   .person .role{ color:var(--accent); font-size:13.5px; margin-bottom:14px; }
   .person p{ color:var(--text-dim); font-size:14.5px; font-weight:300; }
-  .roles{ padding:24px 28px; border-radius:var(--r); border:1px solid var(--line); }
-  .roles h3{ font-size:22px; margin-bottom:16px; }
-  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
-  .chip{ padding:6px 13px; border-radius:100px; border:1px solid var(--line-2); font-size:13.5px; color:var(--text); }
+  .team-head{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-bottom:30px; }
+  .team-head .lede{ justify-self:end; }
+  .leads{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:22px; }
+  .staff{ display:grid; grid-template-columns:.8fr 1.6fr; gap:40px; align-items:start; }
+  .staff-intro h3{ font-size:26px; margin:18px 0 12px; }
+  .staff-intro p{ color:var(--text-dim); font-weight:300; font-size:15.5px; }
+  .crowd{ display:flex; align-items:center; }
+  .crowd i, .crowd b{ width:44px; height:44px; border-radius:50%; margin-left:-10px; border:2px solid var(--card); display:block;
+    background:radial-gradient(circle at 50% 38%, rgba(255,255,255,.28) 0 22%, transparent 23%), radial-gradient(ellipse 60% 45% at 50% 100%, rgba(255,255,255,.22) 0 98%, transparent 100%), linear-gradient(160deg,#2b332d,#1a1d1b); }
+  .crowd i:first-child{ margin-left:0; }
+  .crowd i:nth-child(2){ background-color:#2d2a24; }
+  .crowd b{ background:var(--accent); color:#17110a; font-weight:500; font-size:20px; display:flex; align-items:center; justify-content:center; }
+  .staff-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .staff-role{ display:grid; grid-template-columns:40px 1fr; gap:14px; padding:16px; border-radius:16px; background:rgba(13,13,13,.45); border:1px solid var(--line); transition:border-color .2s; }
+  .staff-role:hover{ border-color:var(--accent-line); }
+  .staff-ico{ width:40px; height:40px; border-radius:12px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; }
+  .staff-role h4{ font-weight:500; font-size:15px; margin-bottom:3px; line-height:1.3; }
+  .staff-role p{ color:var(--text-faint); font-size:13px; line-height:1.4; }
 
   /* contact */
   .cta{ display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:center; padding:56px; border-color:var(--accent-line); }
@@ -309,14 +322,14 @@
     .brand-note{ display:none; }
     .navlinks{ gap:20px; }
     .steps{ grid-template-columns:repeat(3,1fr); }
-    .team{ grid-template-columns:1fr 1fr; }
-    .roles{ grid-column:1/-1; }
+    .staff{ grid-template-columns:1fr; gap:26px; }
   }
   @media (max-width:900px){
     .hero-grid{ grid-template-columns:1fr; }
     .visual{ justify-self:center; max-width:440px; margin-top:10px; }
-    .problem, .process-head, .split, .aud, .cta{ grid-template-columns:1fr; }
-    .process-head .lede{ justify-self:start; }
+    .problem, .process-head, .team-head, .split, .aud, .cta{ grid-template-columns:1fr; }
+    .process-head .lede, .team-head .lede{ justify-self:start; }
+    .team-head{ gap:18px; }
     .problem, .cta{ gap:22px; }
     .why{ padding:20px 0 0; }
   }
@@ -336,7 +349,7 @@
     .burger{ display:block; }
     .steps{ grid-template-columns:1fr 1fr; }
     .step{ min-height:170px; }
-    .team{ grid-template-columns:1fr; }
+    .leads, .staff-grid{ grid-template-columns:1fr; }
     .panel, .problem, .cta{ padding:28px; }
     .person{ grid-template-columns:96px 1fr; }
     .person img{ width:96px; height:116px; }
@@ -557,7 +570,11 @@
   <section id="team">
     <div class="wrap reveal">
       <div class="tag"><b>06</b> Команда</div>
-      <div class="team">
+      <div class="team-head">
+        <h2 style="margin:0">Руководство проекта<br>и <span class="gold">штат специалистов</span></h2>
+        <p class="lede">За каждым проектом стоит команда профильных специалистов с опытом совместной работы. Состав собираем под задачу и масштаб бизнеса.</p>
+      </div>
+      <div class="leads">
         <div class="person">
           <img src="assets/maxim.jpg" alt="Максим Небов" width="120" height="140">
           <div><h3>Максим Небов</h3><div class="role">Фаундер</div><p>Международный консалтинг, иностранная сертификация, корпоративные клиенты</p></div>
@@ -566,16 +583,20 @@
           <img src="assets/anna.jpg" alt="Анна Михайлова" width="120" height="140">
           <div><h3>Анна Михайлова</h3><div class="role">CMO</div><p>Стратегия, запуск и рост продуктов, B2B-ивенты</p></div>
         </div>
-        <div class="roles">
-          <h3>Роли в команде</h3>
-          <div class="chips">
-            <span class="chip">Бизнес-аналитик</span>
-            <span class="chip">Дизайнер</span>
-            <span class="chip">Backend- и Frontend-разработчик</span>
-            <span class="chip">PR &amp; Marketing</span>
-            <span class="chip">Тестировщик</span>
-            <span class="chip">Project Manager</span>
-          </div>
+      </div>
+      <div class="panel glow staff">
+        <div class="staff-intro">
+          <div class="crowd" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b>+</b></div>
+          <h3>Команда специалистов</h3>
+          <p>Аналитики, дизайнеры, разработчики, тестировщики, проектные менеджеры и маркетологи работают в связке. Вы получаете слаженную команду, а не набор фрилансеров.</p>
+        </div>
+        <div class="staff-grid">
+          <div class="staff-role"><div class="staff-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></div><div><h4>Бизнес-аналитики</h4><p>Требования, процессы, оценка проекта</p></div></div>
+          <div class="staff-role"><div class="staff-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg></div><div><h4>Дизайнеры</h4><p>UX/UI, прототипы, айдентика</p></div></div>
+          <div class="staff-role"><div class="staff-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/></svg></div><div><h4>Frontend- и Backend-разработчики</h4><p>Сайты, веб- и мобильные приложения, интеграции</p></div></div>
+          <div class="staff-role"><div class="staff-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/></svg></div><div><h4>Тестировщики</h4><p>Контроль качества перед каждым релизом</p></div></div>
+          <div class="staff-role"><div class="staff-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M7 14h4M7 17h7"/></svg></div><div><h4>Project Managers</h4><p>Сроки, бюджет и прозрачная отчётность</p></div></div>
+          <div class="staff-role"><div class="staff-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 001 1h3l5 4V6L7 10H4a1 1 0 00-1 1zM16 8a5 5 0 010 8M19 5a9 9 0 010 14"/></svg></div><div><h4>PR &amp; Marketing</h4><p>Продвижение и вывод продукта на рынок</p></div></div>
         </div>
       </div>
     </div>

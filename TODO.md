@@ -1,44 +1,54 @@
 # SkyVega site — status & next steps
 
-First-draft single-page site (`index.html`) for the СКАЙВЕГА consulting
-brand, built from copy the founder supplied directly (problem, process,
-services, why-us, audiences, team). Everything below is what a fresh
-session picking this up should know before touching the file.
+Single-page site (`index.html`) for СКАЙВЕГА. **Since 2026-11-14 the copy and
+visual style follow the founder's One-Pager PDF** (sections 01–06: Проблема,
+От идеи до готового продукта, Решение, Почему мы, Для кого, Команда).
+If the One-Pager changes, the site should be re-synced to it.
+
+## Repository — always work here
+- GitHub repo: **SkymaximusXO/SkyVega** (public, push access granted).
+- At the start of a session: attach with `add_repo` (owner `SkymaximusXO`,
+  repo `SkyVega`, access `push`), clone and work on the repo copy — the
+  project's `index.html` is a mirror and may lag behind.
+- After pushing, also update `index.html` / `TODO.md` in the claude.ai project.
 
 ## Live now
-- Hosted via GitHub Pages from branch `claude/claude-capabilities-setup-kqxpxf`
-  (root, single `index.html`, no build step).
-- "Обсудить проект" buttons (nav, hero, contact section) open a modal form:
-  project description, name/email/phone, referral source, required
-  consent checkbox. Submits via FormSubmit.co AJAX.
+- GitHub Pages from branch `claude/claude-capabilities-setup-kqxpxf`
+  (root, no build step). Suggested: rename to `main`.
+- Files: `index.html`, `assets/logo.png`, `assets/mark.png` (favicon),
+  `assets/maxim.jpg`, `assets/anna.jpg` (all extracted from the One-Pager).
+- "Обсудить проект" opens a modal form → FormSubmit.co AJAX.
+
+## Design notes (2026-11-14 redesign)
+- Font: **Onest** (same as One-Pager) + JetBrains Mono for code accents.
+- Colors: bg `#0d0d0d`, cards `#141415` / green-tinted `#181c19`,
+  accent gold `#e4ac68` (sampled from One-Pager).
+- Background: fixed ambient layer — faint engineering grid, gold/green glow
+  orbs, twinkling starfield. Hero visual: orbit + constellation + Vega star
+  (from logo), floating "project.ts" code card, roadmap/Gantt card,
+  "Релиз готов" status chip. Respects `prefers-reduced-motion`.
+- Section labels as outlined pills "01 ПРОБЛЕМА" etc., like the One-Pager.
+- Single file, no framework, no build step — keep it that way.
 
 ## Known placeholders — do not treat as real data
-- Form target email is `maxim.nebov@googlemail.com` — **test address only**,
-  swap for the real company inbox before this goes live for actual clients.
-  FormSubmit requires a one-time confirmation click on the target inbox
-  after the *first* submission before it forwards anything.
-- Contact section email (`info@skyvega.ru`) and Telegram (`@skyvega`) are
-  invented placeholders, not real handles — replace before publishing.
-- The consent checkbox's "Что это значит?" disclosure is placeholder text,
-  not a real privacy policy. Needs an actual policy page/text before this
-  is legally meaningful (152-ФЗ data processing consent).
-- Insights section has no real content yet (three "материал готовится"
-  cards) — founder hasn't provided posts/case studies.
+- Form target email `maxim.nebov@googlemail.com` — test address; swap for
+  the company inbox. FormSubmit needs a one-time confirmation click.
+- Contacts: only the phone **+7 (917) 820 31 75** is shown (from One-Pager).
+  Email and Telegram in the One-Pager are placeholders (`email@gmail.com`,
+  `@telegram`), so they are NOT on the site — add when real ones exist
+  (see TODO comment in the contact section).
+- Consent "Что это значит?" text is not a real privacy policy (152-ФЗ).
+- Insights section removed (no content). Re-add when there are real posts/cases.
 
 ## Open questions for the founder
-- Real company email/Telegram/phone for the contact section.
-- Actual domain name — user said one is "theoretically" ready but hasn't
-  named it. Once given: add `CNAME` file at repo root with the domain,
-  set it in GitHub Settings → Pages, and set DNS (4 A records for apex,
-  or a CNAME record for a `www` subdomain — see chat history / ask again).
-- Whether FormSubmit.co is reliably reachable from Russian ISPs — untested.
-  If it turns out to be blocked/flaky, swap to Web3Forms or similar; only
-  the `fetch()` URL + hidden fields in the modal's JS need to change.
-- Real privacy policy copy for the consent disclosure.
+- Real company email / Telegram.
+- Domain name → `CNAME` file + GitHub Pages setting + DNS.
+- Is FormSubmit.co reachable from Russian ISPs? If not → Web3Forms or similar.
+- Real privacy policy text.
 
-## Design notes (so style stays consistent if extended)
-- Dark theme, gold accent (`--accent: #cda45e`), serif headings
-  (Playfair Display) + sans body (Manrope), both loaded with Cyrillic
-  subset from Google Fonts.
-- Single file, no framework, no build step — keep it that way unless the
-  site's scope grows enough to justify one.
+## Backlog
+- Yandex.Metrika / Webmaster verification.
+- Personal email exposed in public repo — use FormSubmit hashed alias.
+- 152-ФЗ: data goes to a US service + Gmail; consent must be a separate doc.
+- Form: phone/Telegram as alternative to email; consent should link to policy.
+- OG image: currently the logo PNG; a dedicated 1200×630 card would be better.

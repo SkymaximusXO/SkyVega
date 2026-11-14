@@ -85,8 +85,13 @@
   /* ---------- Header ---------- */
   header{
     position:fixed; top:0; left:0; right:0; z-index:50;
-    background:rgba(13,13,13,.72); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
     border-bottom:1px solid var(--line);
+  }
+  /* blur lives on a pseudo-element: backdrop-filter on header itself would
+     trap the fixed mobile menu inside the header's 76px box */
+  header::before{
+    content:""; position:absolute; inset:0; z-index:-1;
+    background:rgba(13,13,13,.72); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
   }
   .nav{ display:flex; align-items:center; justify-content:space-between; height:76px; gap:24px; }
   .brand{ display:flex; align-items:center; gap:18px; }
@@ -95,6 +100,7 @@
   .navlinks{ display:flex; gap:28px; align-items:center; }
   .navlinks a{ font-size:14px; color:var(--text-dim); transition:color .2s; }
   .navlinks a:hover{ color:var(--text); }
+  .navlinks .nav-mobile-cta{ display:none; }
   .navcta{ display:flex; align-items:center; gap:16px; }
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
@@ -318,11 +324,13 @@
     section{ padding:40px 0; }
     .hero{ padding:120px 0 20px; }
     .navlinks{
-      position:fixed; top:76px; left:0; right:0; bottom:0; background:var(--bg);
+      position:fixed; top:76px; left:0; right:0; height:calc(100vh - 76px); height:calc(100dvh - 76px);
+      background:var(--bg); overflow-y:auto; z-index:49;
       flex-direction:column; justify-content:flex-start; align-items:flex-start;
       padding:32px 28px; gap:24px; transform:translateX(100%); transition:transform .25s;
     }
     .navlinks a{ font-size:20px; color:var(--text); }
+    .navlinks .nav-mobile-cta{ display:inline-flex; margin-top:12px; width:100%; }
     .navlinks.open{ transform:none; }
     .navcta .btn-primary{ display:none; }
     .burger{ display:block; }
@@ -376,6 +384,7 @@
       <a href="#audience">Для кого</a>
       <a href="#team">Команда</a>
       <a href="#contact">Контакты</a>
+      <button type="button" class="btn btn-primary nav-mobile-cta" data-open-modal>Обсудить проект</button>
     </nav>
     <div class="navcta">
       <button type="button" class="btn btn-primary" data-open-modal>Обсудить проект</button>
@@ -663,10 +672,14 @@
   // mobile nav
   const burger = document.getElementById('burger');
   const navlinks = document.getElementById('navlinks');
-  burger.addEventListener('click', () => { burger.classList.toggle('open'); navlinks.classList.toggle('open'); });
-  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    burger.classList.remove('open'); navlinks.classList.remove('open');
-  }));
+  function setMenu(open){
+    burger.classList.toggle('open', open); navlinks.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    burger.setAttribute('aria-expanded', open);
+  }
+  burger.addEventListener('click', () => setMenu(!navlinks.classList.contains('open')));
+  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  window.addEventListener('resize', () => { if (window.innerWidth > 760 && navlinks.classList.contains('open')) setMenu(false); });
 
   // reveal on scroll
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
@@ -691,7 +704,7 @@
     document.body.style.overflow = '';
     if (lastFocus) lastFocus.focus();
   }
-  document.querySelectorAll('[data-open-modal]').forEach(btn => btn.addEventListener('click', openModal));
+  document.querySelectorAll('[data-open-modal]').forEach(btn => btn.addEventListener('click', () => { setMenu(false); openModal(); }));
   modalClose.addEventListener('click', closeModal);
   modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal(); });

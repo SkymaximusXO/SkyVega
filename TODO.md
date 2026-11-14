@@ -2,11 +2,12 @@
 
 Single-page site (`index.html`) for СКАЙВЕГА. **Since 2026-11-14 the copy and
 visual style follow the founder's One-Pager PDF** (sections 01–06).
-**2026-11-14 rework (deviates from One-Pager):** order is now 01 Проблема →
-02 Решение (4 service cards with «С чем приходят») → 03 Как мы работаем
-(steps: Диагностика, Стратегия и план, Проектирование, Реализация, Запуск и рост;
-01–02 consulting, 03–05 IT) → 04 Почему мы → 05 Для кого → 06 Команда.
-Backup of the previous version: branch `claude/backup-2026-11-14-before-process-rework`.
+**2026-11-14 rework (deviates from One-Pager):** 01 Проблема → 02 Решение
+(services and process merged: two tracks — «Бизнес-консалтинг» with steps
+01 Диагностика, 02 Стратегия и план; «IT-разработка и запуск» with 03
+Проектирование, 04 Реализация, 05 Запуск и рост; plus an «Упаковка и
+аутстаффинг на любом этапе» strip) → 03 Почему мы → 04 Для кого → 05 Команда.
+Backup of the pre-rework version: branch `claude/backup-2026-11-14-before-process-rework`.
 One-Pager should be updated to match.
 If the One-Pager changes, the site should be re-synced to it.
 

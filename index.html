@@ -195,7 +195,6 @@
   /* process */
   .process-head{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-bottom:34px; }
   .process-head .lede{ justify-self:end; }
-  .steps{ display:grid; grid-template-columns:repeat(5,1fr); gap:14px; position:relative; }
   .step{
     position:relative; border-radius:20px; padding:22px 20px 22px; min-height:200px;
     background:linear-gradient(170deg, var(--card-2), #121513 70%); border:1px solid var(--line);
@@ -207,7 +206,7 @@
   .arr{ color:var(--accent); width:14px; height:14px; flex-shrink:0; }
   .btn .arr{ color:currentColor; }
   .step h3{ font-size:17px; font-weight:400; margin:28px 0 6px; }
-  .step p{ font-size:13px; color:var(--text-faint); line-height:1.35; min-height:2.7em; }
+  .step p{ font-size:13px; color:var(--text-faint); line-height:1.4; min-height:3.6em; }
   button.step{ font:inherit; color:inherit; text-align:left; cursor:pointer; width:100%; }
   button.step:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
   .step .arr{ transition:transform .25s; }
@@ -272,26 +271,28 @@
     .sd-body{ padding:24px 22px 22px; }
   }
 
-  /* solution */
-  .svc-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-  .svc{ display:flex; flex-direction:column; padding:24px 22px; border-radius:20px; background:var(--card); border:1px solid var(--line); transition:border-color .25s, transform .25s; }
-  .svc:hover{ border-color:var(--accent-line); transform:translateY(-3px); }
-  .svc-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px; }
-  .svc-ico{ width:46px; height:46px; border-radius:14px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; }
-  .svc-num{ font-size:13px; color:var(--text-faint); letter-spacing:.1em; }
-  .svc h3{ font-size:20px; margin-bottom:8px; }
-  .svc p{ color:var(--text-dim); font-size:14.5px; font-weight:300; margin-bottom:18px; min-height:4.6em; }
-  .svc-when{ padding-top:16px; border-top:1px solid var(--line); font-size:13.5px; color:var(--text); line-height:1.45; }
-  .svc-when span{ display:block; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
-
-  /* steps legend: consulting vs IT */
-  .step[data-step="0"], .step[data-step="1"]{ background:linear-gradient(170deg, #1d1a15, #131210 70%); }
-  .steps-legend{ display:flex; gap:22px; flex-wrap:wrap; margin-top:16px; font-size:13px; color:var(--text-dim); }
-  .steps-legend span{ display:inline-flex; align-items:center; gap:8px; }
-  .steps-legend i{ width:10px; height:10px; border-radius:3px; display:inline-block; }
-  .lg-c{ background:#3a3022; border:1px solid var(--accent-line); }
-  .lg-it{ background:#1f2a23; border:1px solid rgba(111,174,136,.45); }
-  .steps-hint{ margin-top:8px; }
+  /* solution: two tracks of steps */
+  .svc-ico{ width:46px; height:46px; flex-shrink:0; border-radius:14px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; }
+  .tracks{ display:grid; grid-template-columns:2fr 3fr; gap:14px; scroll-margin-top:90px; }
+  .track{ border-radius:24px; padding:18px; border:1px solid var(--line); display:flex; flex-direction:column; }
+  .track-c{ background:linear-gradient(160deg, rgba(228,172,104,.09), rgba(228,172,104,.02)); border-color:rgba(228,172,104,.22); }
+  .track-it{ background:linear-gradient(160deg, rgba(111,174,136,.08), rgba(111,174,136,.02)); border-color:rgba(111,174,136,.22); }
+  .track-head{ display:flex; flex-direction:column; gap:6px; padding:4px 6px 16px; }
+  .track-label{ font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); }
+  .track-it .track-label{ color:#8fc7a4; }
+  .track-head p{ font-size:13.5px; color:var(--text-dim); }
+  .track-steps{ display:grid; gap:12px; flex:1; }
+  .track .step{ min-height:220px; }
+  .track .step-top{ margin-bottom:22px; }
+  .track .step h3{ margin-top:0; }
+  .track .step-more{ margin-top:auto; padding-top:14px; }
+  .track-c .track-steps{ grid-template-columns:repeat(2,1fr); }
+  .track-it .track-steps{ grid-template-columns:repeat(3,1fr); }
+  .track-c .step{ background:linear-gradient(170deg, #1d1a15, #131210 70%); }
+  .outstaff{ display:flex; align-items:center; gap:16px; margin-top:14px; padding:16px 20px; border-radius:18px; border:1px dashed var(--line-2); }
+  .outstaff p{ color:var(--text-dim); font-size:14.5px; font-weight:300; }
+  .outstaff b{ color:var(--text); font-weight:500; }
+  .steps-hint{ margin-top:14px; }
 
   /* why */
   .why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
@@ -424,7 +425,6 @@
   }
   @media (max-width:1080px){
     .navlinks{ gap:20px; }
-    .steps{ grid-template-columns:repeat(3,1fr); }
     .staff{ grid-template-columns:1fr; gap:26px; }
     .leads .person img{ height:220px; }
   }
@@ -432,8 +432,7 @@
     .hero-grid{ grid-template-columns:1fr; }
     .visual{ justify-self:center; max-width:440px; margin-top:10px; }
     .problem, .process-head, .team-head, .aud, .cta{ grid-template-columns:1fr; }
-    .svc-grid{ grid-template-columns:1fr 1fr; }
-    .svc p{ min-height:0; }
+    .tracks{ grid-template-columns:1fr; }
     .why-grid{ grid-template-columns:1fr; }
     .process-head .lede, .team-head .lede{ justify-self:start; }
     .team-head{ gap:18px; }
@@ -442,9 +441,14 @@
   @media (max-width:760px){
     section{ padding:40px 0; }
     .hero{ padding:120px 0 20px; }
-    .steps{ grid-template-columns:1fr 1fr; }
     .step{ min-height:170px; }
-    .leads, .staff-grid, .svc-grid{ grid-template-columns:1fr; }
+    .leads, .staff-grid{ grid-template-columns:1fr; }
+    .track-c .track-steps, .track-it .track-steps{ grid-template-columns:1fr; }
+    .track{ padding:14px; }
+    .track .step{ min-height:0; }
+    .track .step-num{ font-size:32px; }
+    .track .step-top{ margin-bottom:14px; }
+    .outstaff{ align-items:flex-start; }
     .leads .person{ grid-template-columns:96px 1fr; gap:22px; }
     .leads .person img{ width:96px; height:116px; }
     .panel, .problem, .cta{ padding:28px; }
@@ -458,7 +462,6 @@
     .status{ left:auto; right:4%; bottom:12%; }
   }
   @media (max-width:420px){
-    .steps{ grid-template-columns:1fr; }
     .step{ min-height:0; }
     .step h3{ margin-top:18px; }
   }
@@ -489,7 +492,6 @@
     <nav class="navlinks" id="navlinks">
       <a href="#about">О нас</a>
       <a href="#services">Услуги</a>
-      <a href="#process">Этапы</a>
       <a href="#audience">Для кого</a>
       <a href="#team">Команда</a>
       <a href="#contact">Контакты</a>
@@ -604,61 +606,34 @@
     </div>
   </section>
 
-  <!-- 02 SOLUTION -->
+  <!-- 02 SOLUTION (services + process merged) -->
   <section id="services">
     <div class="wrap reveal">
       <div class="tag"><b>02</b> Решение</div>
       <div class="process-head">
         <h2 style="margin:0">Комплексный подход<br>к развитию вашего бизнеса</h2>
-        <p class="lede">Консалтинг и IT в одной команде: можно взять отдельное направление или пройти весь путь — от аудита до работающего продукта</p>
+        <p class="lede">Консалтинг и IT в одной команде. Подключаемся на нужном этапе — или ведём проект от аудита до работающего продукта без передачи между подрядчиками</p>
       </div>
-      <div class="svc-grid">
-        <div class="svc">
-          <div class="svc-top"><div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 13l2-2 2 2 3-4"/></svg></div><span class="svc-num">01</span></div>
-          <h3>Бизнес-консалтинг</h3>
-          <p>Аудит бизнеса и процессов, поиск точек роста, оценка рисков</p>
-          <div class="svc-when"><span>С чем приходят</span>Бизнес растёт медленнее, чем хотелось бы, и непонятно, где теряются деньги и время</div>
+      <div class="tracks" id="process">
+        <div class="track track-c">
+          <div class="track-head"><span class="track-label">Бизнес-консалтинг</span><p>Когда нужно понять, где точки роста, и выстроить план</p></div>
+          <div class="track-steps">
+          <button type="button" class="step" data-step="0" aria-haspopup="dialog"><div class="step-top"><span class="step-num">01</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Диагностика</h3><p>Аудит бизнеса, процессов и IT, поиск точек роста</p><span class="step-more">Подробнее</span></button>
+          <button type="button" class="step" data-step="1" aria-haspopup="dialog"><div class="step-top"><span class="step-num">02</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Стратегия и план</h3><p>Позиционирование, бизнес- и маркетинговая стратегия, дорожная карта</p><span class="step-more">Подробнее</span></button>
+          </div>
         </div>
-        <div class="svc">
-          <div class="svc-top"><div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="M12 3v2M21 12h-2"/></svg></div><span class="svc-num">02</span></div>
-          <h3>Стратегия</h3>
-          <p>Бизнес- и маркетинговая стратегия, позиционирование, дорожная карта</p>
-          <div class="svc-when"><span>С чем приходят</span>Запускаете новое направление или выходите на рынок, и нужен план, в который верят команда и партнёры</div>
-        </div>
-        <div class="svc">
-          <div class="svc-top"><div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/></svg></div><span class="svc-num">03</span></div>
-          <h3>IT-разработка</h3>
-          <p>Сайты, веб- и мобильные приложения, CRM, интеграции и AI под ключ</p>
-          <div class="svc-when"><span>С чем приходят</span>Нужен цифровой продукт или автоматизация, и важно, чтобы его довели до запуска</div>
-        </div>
-        <div class="svc">
-          <div class="svc-top"><div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div><span class="svc-num">04</span></div>
-          <h3>Упаковка и аутстаффинг</h3>
-          <p>Запуск продуктов и усиление вашей команды профильными специалистами</p>
-          <div class="svc-when"><span>С чем приходят</span>Есть идея или своя команда, но не хватает рук и компетенций</div>
+        <div class="track track-it">
+          <div class="track-head"><span class="track-label">IT-разработка и запуск</span><p>Когда нужен цифровой продукт или автоматизация под ключ</p></div>
+          <div class="track-steps">
+          <button type="button" class="step" data-step="2" aria-haspopup="dialog"><div class="step-top"><span class="step-num">03</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Проектирование</h3><p>Процессы, UX/UI-дизайн, архитектура решения</p><span class="step-more">Подробнее</span></button>
+          <button type="button" class="step" data-step="3" aria-haspopup="dialog"><div class="step-top"><span class="step-num">04</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Реализация</h3><p>Сайты, приложения, CRM, интеграции и AI — с тестированием</p><span class="step-more">Подробнее</span></button>
+          <button type="button" class="step" data-step="4" aria-haspopup="dialog"><div class="step-top"><span class="step-num">05</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Запуск и рост</h3><p>Вывод на рынок, PR, поддержка и развитие</p><span class="step-more">Подробнее</span></button>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- 03 PROCESS -->
-  <section id="process">
-    <div class="wrap reveal">
-      <div class="tag"><b>03</b> Как мы работаем</div>
-      <div class="process-head">
-        <h2 style="margin:0">Одна команда<br>на всех этапах</h2>
-        <p class="lede">Подключаемся на любом этапе. Можно ограничиться диагностикой и стратегией или пройти весь путь до запуска — без передачи проекта между подрядчиками</p>
-      </div>
-      <div class="steps">
-        <button type="button" class="step" data-step="0" aria-haspopup="dialog"><div class="step-top"><span class="step-num">01</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Диагностика</h3><p>Аудит и интервью</p><span class="step-more">Подробнее</span></button>
-        <button type="button" class="step" data-step="1" aria-haspopup="dialog"><div class="step-top"><span class="step-num">02</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Стратегия и план</h3><p>Позиционирование и дорожная карта</p><span class="step-more">Подробнее</span></button>
-        <button type="button" class="step" data-step="2" aria-haspopup="dialog"><div class="step-top"><span class="step-num">03</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Проектирование</h3><p>Процессы, UX/UI, архитектура</p><span class="step-more">Подробнее</span></button>
-        <button type="button" class="step" data-step="3" aria-haspopup="dialog"><div class="step-top"><span class="step-num">04</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Реализация</h3><p>Разработка и внедрение</p><span class="step-more">Подробнее</span></button>
-        <button type="button" class="step" data-step="4" aria-haspopup="dialog"><div class="step-top"><span class="step-num">05</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Запуск и рост</h3><p>Сопровождение</p><span class="step-more">Подробнее</span></button>
-      </div>
-      <div class="steps-legend">
-        <span><i class="lg-c"></i>Консалтинг: этапы 01–02</span>
-        <span><i class="lg-it"></i>Проектирование и IT: этапы 03–05</span>
+      <div class="outstaff">
+        <div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div>
+        <p><b>Упаковка и аутстаффинг на любом этапе.</b> Есть идея или своя команда, но не хватает рук и компетенций — подключим профильных специалистов точечно.</p>
       </div>
       <p class="steps-hint">Нажмите на этап, чтобы узнать, что входит в работу и что вы получите на выходе</p>
     </div>
@@ -667,7 +642,7 @@
   <!-- 04 WHY -->
   <section id="why">
     <div class="wrap reveal">
-      <div class="tag"><b>04</b> Почему мы</div>
+      <div class="tag"><b>03</b> Почему мы</div>
       <h2>Мы — ваш стратегический партнер</h2>
       <div class="why-grid">
         <div class="why-item"><b>Слаженная команда</b>Специалисты с опытом совместной работы</div>
@@ -680,7 +655,7 @@
   <!-- 05 AUDIENCE -->
   <section id="audience">
     <div class="wrap reveal">
-      <div class="tag"><b>05</b> Для кого мы работаем</div>
+      <div class="tag"><b>04</b> Для кого мы работаем</div>
       <div class="aud">
         <div class="aud-item">
           <div class="aud-ico"><svg width="16" height="16"><use href="#i-arrow"/></svg></div>
@@ -697,7 +672,7 @@
   <!-- 06 TEAM -->
   <section id="team">
     <div class="wrap reveal">
-      <div class="tag"><b>06</b> Команда</div>
+      <div class="tag"><b>05</b> Команда</div>
       <div class="team-head">
         <h2 style="margin:0">Руководство проекта<br>и <span class="gold">штат специалистов</span></h2>
         <p class="lede">За каждым проектом стоит команда профильных специалистов с опытом совместной работы. Состав собираем под задачу и масштаб бизнеса.</p>

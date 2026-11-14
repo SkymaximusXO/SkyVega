@@ -16,7 +16,11 @@ If the One-Pager changes, the site should be re-synced to it.
 - GitHub Pages from branch `claude/claude-capabilities-setup-kqxpxf`
   (root, no build step). Suggested: rename to `main`.
 - Files: `index.html`, `assets/logo.png`, `assets/mark.png` (favicon),
-  `assets/maxim.jpg`, `assets/anna.jpg` (all extracted from the One-Pager).
+  `assets/maxim.jpg`, `assets/anna.jpg` (from the One-Pager), `assets/polina.jpg`
+  (sent by founder 2026-11-14).
+- Team leads (2026-11-14): Максим Небов — Фаундер; Анна Михайлова — Соучредитель;
+  Полина Рахматуллина — CMO. Below them a "Команда специалистов" panel with
+  role cards (no names/headcount by founder's choice).
 - "Обсудить проект" opens a modal form → FormSubmit.co AJAX.
 
 ## Design notes (2026-11-14 redesign)

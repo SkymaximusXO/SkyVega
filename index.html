@@ -237,7 +237,9 @@
   .person p{ color:var(--text-dim); font-size:14.5px; font-weight:300; }
   .team-head{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-bottom:30px; }
   .team-head .lede{ justify-self:end; }
-  .leads{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:22px; }
+  .leads{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-bottom:22px; }
+  .leads .person{ grid-template-columns:1fr; gap:20px; align-content:start; }
+  .leads .person img{ width:100%; height:260px; object-position:50% 22%; }
   .staff{ display:grid; grid-template-columns:.8fr 1.6fr; gap:40px; align-items:start; }
   .staff-intro h3{ font-size:26px; margin:18px 0 12px; }
   .staff-intro p{ color:var(--text-dim); font-weight:300; font-size:15.5px; }
@@ -347,6 +349,7 @@
     .navlinks{ gap:20px; }
     .steps{ grid-template-columns:repeat(3,1fr); }
     .staff{ grid-template-columns:1fr; gap:26px; }
+    .leads .person img{ height:220px; }
   }
   @media (max-width:900px){
     .hero-grid{ grid-template-columns:1fr; }
@@ -363,6 +366,8 @@
     .steps{ grid-template-columns:1fr 1fr; }
     .step{ min-height:170px; }
     .leads, .staff-grid{ grid-template-columns:1fr; }
+    .leads .person{ grid-template-columns:96px 1fr; gap:22px; }
+    .leads .person img{ width:96px; height:116px; }
     .panel, .problem, .cta{ padding:28px; }
     .person{ grid-template-columns:96px 1fr; }
     .person img{ width:96px; height:116px; }
@@ -595,7 +600,11 @@
         </div>
         <div class="person">
           <img src="assets/anna.jpg" alt="Анна Михайлова" width="120" height="140">
-          <div><h3>Анна Михайлова</h3><div class="role">CMO</div><p>Стратегия, запуск и рост продуктов, B2B-ивенты</p></div>
+          <div><h3>Анна Михайлова</h3><div class="role">Соучредитель</div><p>Стратегия, запуск и рост продуктов, B2B-ивенты</p></div>
+        </div>
+        <div class="person">
+          <img src="assets/polina.jpg" alt="Полина Рахматуллина" width="120" height="140">
+          <div><h3>Полина Рахматуллина</h3><div class="role">CMO</div><p>6+ лет в маркетинге и PR, маркетинговые стратегии, управление командами, развитие брендов и стратегических партнёрств</p></div>
         </div>
       </div>
       <div class="panel glow staff">

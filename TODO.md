@@ -31,6 +31,11 @@ If the One-Pager changes, the site should be re-synced to it.
   orbs, twinkling starfield. Hero visual: orbit + constellation + Vega star
   (from logo), floating "project.ts" code card, roadmap/Gantt card,
   "Релиз готов" status chip. Respects `prefers-reduced-motion`.
+- Process steps (section 02) are buttons: click opens a detail dialog
+  (#stepOverlay) with an inline SVG illustration, lead, "Что делаем" list,
+  "Результат этапа", prev/next, dots, swipe on touch, CTA → #contact.
+  Copy lives in the `STEPS` array in the script — edit there. No durations
+  or prices promised on purpose.
 - Section labels as outlined pills "01 ПРОБЛЕМА" etc., like the One-Pager.
 - Single file, no framework, no build step — keep it that way.
 

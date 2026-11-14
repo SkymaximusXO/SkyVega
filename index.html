@@ -884,12 +884,29 @@
     if (e.key === 'ArrowLeft') sd('sdPrev').click();
   });
   // swipe between steps on touch screens
-  let sx = null;
-  sdOverlay.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  // only a clearly horizontal, quick swipe switches steps; any vertical
+  // movement first locks the gesture as a scroll
+  let sw = null;
+  sdOverlay.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) { sw = null; return; }
+    const t = e.touches[0];
+    sw = { x: t.clientX, y: t.clientY, t: Date.now(), axis: null };
+  }, { passive: true });
+  sdOverlay.addEventListener('touchmove', e => {
+    if (!sw || sw.axis) return;
+    const t = e.touches[0], dx = Math.abs(t.clientX - sw.x), dy = Math.abs(t.clientY - sw.y);
+    if (dx < 10 && dy < 10) return;
+    sw.axis = dx > dy * 1.5 ? 'x' : 'y';
+  }, { passive: true });
   sdOverlay.addEventListener('touchend', e => {
-    if (sx === null) return; const dx = e.changedTouches[0].clientX - sx; sx = null;
-    if (Math.abs(dx) > 60) (dx < 0 ? sd('sdNext') : sd('sdPrev')).click();
-  });
+    if (!sw) return;
+    const g = sw; sw = null;
+    if (g.axis !== 'x') return;
+    const t = e.changedTouches[0], dx = t.clientX - g.x, dy = t.clientY - g.y;
+    if (Math.abs(dx) < 70 || Math.abs(dy) > 40 || Date.now() - g.t > 700) return;
+    (dx < 0 ? sd('sdNext') : sd('sdPrev')).click();
+  }, { passive: true });
+  sdOverlay.addEventListener('touchcancel', () => { sw = null; }, { passive: true });
 
   // modal
   const modalOverlay = document.getElementById('modalOverlay');

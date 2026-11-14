@@ -98,7 +98,8 @@
   .brand img{ height:30px; width:auto; flex-shrink:0; }
   .navlinks{ display:flex; gap:28px; align-items:center; }
   .navlinks a{ font-size:14px; color:var(--text-dim); transition:color .2s; white-space:nowrap; }
-  .navlinks a:hover{ color:var(--text); }
+  .navlinks a:hover, .navlinks a.active{ color:var(--text); }
+  .navlinks a.active{ color:var(--accent); }
   .navlinks .nav-mobile-cta{ display:none; }
   .nav-phone{ display:inline-flex; align-items:center; gap:8px; font-size:14.5px; color:var(--text); white-space:nowrap; transition:color .2s; }
   .nav-phone svg{ color:var(--accent); width:16px; height:16px; flex-shrink:0; }
@@ -490,8 +491,9 @@
       <img src="assets/logo.png" alt="СКАЙВЕГА" width="273" height="46">
     </a>
     <nav class="navlinks" id="navlinks">
-      <a href="#about">О нас</a>
-      <a href="#services">Услуги</a>
+      <a href="#about">Проблема</a>
+      <a href="#services">Решение</a>
+      <a href="#why">Почему мы</a>
       <a href="#audience">Для кого</a>
       <a href="#team">Команда</a>
       <a href="#contact">Контакты</a>
@@ -830,6 +832,22 @@
   burger.addEventListener('click', () => setMenu(!navlinks.classList.contains('open')));
   navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   window.addEventListener('resize', () => { if (window.innerWidth > 760 && navlinks.classList.contains('open')) setMenu(false); });
+
+  // highlight the nav item of the section in view (last section whose top passed the header)
+  (function(){
+    const links = [...navlinks.querySelectorAll('a[href^="#"]:not(.btn)')];
+    const secs = links.map(l => document.querySelector(l.getAttribute('href')));
+    let raf = 0;
+    function update(){
+      raf = 0;
+      let cur = -1;
+      secs.forEach((sec, k) => { if (sec && sec.getBoundingClientRect().top <= 140) cur = k; });
+      if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = secs.length - 1;
+      links.forEach((l, k) => l.classList.toggle('active', k === cur));
+    }
+    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    update();
+  })();
 
   // reveal on scroll
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {

@@ -207,7 +207,7 @@
   .arr{ color:var(--accent); width:14px; height:14px; flex-shrink:0; }
   .btn .arr{ color:currentColor; }
   .step h3{ font-size:17px; font-weight:400; margin:28px 0 6px; }
-  .step p{ font-size:13px; color:var(--text-faint); line-height:1.35; }
+  .step p{ font-size:13px; color:var(--text-faint); line-height:1.35; min-height:2.7em; }
   button.step{ font:inherit; color:inherit; text-align:left; cursor:pointer; width:100%; }
   button.step:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
   .step .arr{ transition:transform .25s; }
@@ -272,18 +272,32 @@
     .sd-body{ padding:24px 22px 22px; }
   }
 
-  /* solution + why */
-  .split{ display:grid; grid-template-columns:1.05fr 1fr; gap:22px; align-items:start; }
-  .split h2{ font-size:clamp(26px,2.8vw,34px); margin-bottom:26px; }
-  .sol-list li{ display:grid; grid-template-columns:22px 1fr; gap:12px; padding:16px 0; border-bottom:1px solid var(--line); color:var(--text-dim); font-size:15.5px; }
-  .sol-list li:last-child{ border-bottom:none; padding-bottom:0; }
-  .sol-list li b{ color:var(--text); font-weight:500; }
-  .sol-list .arr{ margin-top:5px; }
-  .why{ padding:40px 8px 0; }
-  .why-list{ display:flex; flex-direction:column; gap:12px; }
-  .why-item{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px 22px; color:var(--text-dim); font-size:15.5px; transition:border-color .2s; }
+  /* solution */
+  .svc-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .svc{ display:flex; flex-direction:column; padding:24px 22px; border-radius:20px; background:var(--card); border:1px solid var(--line); transition:border-color .25s, transform .25s; }
+  .svc:hover{ border-color:var(--accent-line); transform:translateY(-3px); }
+  .svc-top{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px; }
+  .svc-ico{ width:46px; height:46px; border-radius:14px; background:var(--accent-soft); color:var(--accent); display:flex; align-items:center; justify-content:center; }
+  .svc-num{ font-size:13px; color:var(--text-faint); letter-spacing:.1em; }
+  .svc h3{ font-size:20px; margin-bottom:8px; }
+  .svc p{ color:var(--text-dim); font-size:14.5px; font-weight:300; margin-bottom:18px; min-height:4.6em; }
+  .svc-when{ padding-top:16px; border-top:1px solid var(--line); font-size:13.5px; color:var(--text); line-height:1.45; }
+  .svc-when span{ display:block; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+
+  /* steps legend: consulting vs IT */
+  .step[data-step="0"], .step[data-step="1"]{ background:linear-gradient(170deg, #1d1a15, #131210 70%); }
+  .steps-legend{ display:flex; gap:22px; flex-wrap:wrap; margin-top:16px; font-size:13px; color:var(--text-dim); }
+  .steps-legend span{ display:inline-flex; align-items:center; gap:8px; }
+  .steps-legend i{ width:10px; height:10px; border-radius:3px; display:inline-block; }
+  .lg-c{ background:#3a3022; border:1px solid var(--accent-line); }
+  .lg-it{ background:#1f2a23; border:1px solid rgba(111,174,136,.45); }
+  .steps-hint{ margin-top:8px; }
+
+  /* why */
+  .why-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .why-item{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px; color:var(--text-dim); font-size:15px; font-weight:300; transition:border-color .2s; }
   .why-item:hover{ border-color:var(--accent-line); }
-  .why-item b{ color:var(--accent); font-weight:400; }
+  .why-item b{ display:block; color:var(--accent); font-weight:400; font-size:17px; margin-bottom:6px; }
 
   /* audience */
   .aud{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
@@ -417,18 +431,20 @@
   @media (max-width:900px){
     .hero-grid{ grid-template-columns:1fr; }
     .visual{ justify-self:center; max-width:440px; margin-top:10px; }
-    .problem, .process-head, .team-head, .split, .aud, .cta{ grid-template-columns:1fr; }
+    .problem, .process-head, .team-head, .aud, .cta{ grid-template-columns:1fr; }
+    .svc-grid{ grid-template-columns:1fr 1fr; }
+    .svc p{ min-height:0; }
+    .why-grid{ grid-template-columns:1fr; }
     .process-head .lede, .team-head .lede{ justify-self:start; }
     .team-head{ gap:18px; }
     .problem, .cta{ gap:22px; }
-    .why{ padding:20px 0 0; }
   }
   @media (max-width:760px){
     section{ padding:40px 0; }
     .hero{ padding:120px 0 20px; }
     .steps{ grid-template-columns:1fr 1fr; }
     .step{ min-height:170px; }
-    .leads, .staff-grid{ grid-template-columns:1fr; }
+    .leads, .staff-grid, .svc-grid{ grid-template-columns:1fr; }
     .leads .person{ grid-template-columns:96px 1fr; gap:22px; }
     .leads .person img{ width:96px; height:116px; }
     .panel, .problem, .cta{ padding:28px; }
@@ -472,8 +488,8 @@
     </a>
     <nav class="navlinks" id="navlinks">
       <a href="#about">О нас</a>
-      <a href="#process">Этапы</a>
       <a href="#services">Услуги</a>
+      <a href="#process">Этапы</a>
       <a href="#audience">Для кого</a>
       <a href="#team">Команда</a>
       <a href="#contact">Контакты</a>
@@ -588,47 +604,75 @@
     </div>
   </section>
 
-  <!-- 02 PROCESS -->
-  <section id="process">
+  <!-- 02 SOLUTION -->
+  <section id="services">
     <div class="wrap reveal">
-      <div class="tag"><b>02</b> От идеи до готового продукта</div>
+      <div class="tag"><b>02</b> Решение</div>
       <div class="process-head">
-        <h2 style="margin:0">Одна команда<br>на всех этапах</h2>
-        <p class="lede">Мы не передаём проект между подрядчиками на каждом этапе — одна команда ведёт продукт от стратегии до работающей IT-разработки и запуска</p>
+        <h2 style="margin:0">Комплексный подход<br>к развитию вашего бизнеса</h2>
+        <p class="lede">Консалтинг и IT в одной команде: можно взять отдельное направление или пройти весь путь — от аудита до работающего продукта</p>
       </div>
-      <div class="steps">
-        <button type="button" class="step" data-step="0" aria-haspopup="dialog"><div class="step-top"><span class="step-num">01</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Стратегия</h3><p>Позиционирование и план</p><span class="step-more">Подробнее</span></button>
-        <button type="button" class="step" data-step="1" aria-haspopup="dialog"><div class="step-top"><span class="step-num">02</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>UX/UI-дизайн</h3><p>Прототип продукта</p><span class="step-more">Подробнее</span></button>
-        <button type="button" class="step" data-step="2" aria-haspopup="dialog"><div class="step-top"><span class="step-num">03</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Разработка</h3><p>Frontend и Backend</p><span class="step-more">Подробнее</span></button>
-        <button type="button" class="step" data-step="3" aria-haspopup="dialog"><div class="step-top"><span class="step-num">04</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Тестирование</h3><p>Контроль качества</p><span class="step-more">Подробнее</span></button>
-        <button type="button" class="step" data-step="4" aria-haspopup="dialog"><div class="step-top"><span class="step-num">05</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Запуск и рост</h3><p>Сопровождение</p><span class="step-more">Подробнее</span></button>
-      </div>
-      <p class="steps-hint">Нажмите на этап, чтобы узнать, что входит в работу и что вы получите на выходе</p>
+      <div class="svc-grid">
+        <div class="svc">
+          <div class="svc-top"><div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 13l2-2 2 2 3-4"/></svg></div><span class="svc-num">01</span></div>
+          <h3>Бизнес-консалтинг</h3>
+          <p>Аудит бизнеса и процессов, поиск точек роста, оценка рисков</p>
+          <div class="svc-when"><span>С чем приходят</span>Бизнес растёт медленнее, чем хотелось бы, и непонятно, где теряются деньги и время</div>
+        </div>
+        <div class="svc">
+          <div class="svc-top"><div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/><path d="M12 3v2M21 12h-2"/></svg></div><span class="svc-num">02</span></div>
+          <h3>Стратегия</h3>
+          <p>Бизнес- и маркетинговая стратегия, позиционирование, дорожная карта</p>
+          <div class="svc-when"><span>С чем приходят</span>Запускаете новое направление или выходите на рынок, и нужен план, в который верят команда и партнёры</div>
+        </div>
+        <div class="svc">
+          <div class="svc-top"><div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/></svg></div><span class="svc-num">03</span></div>
+          <h3>IT-разработка</h3>
+          <p>Сайты, веб- и мобильные приложения, CRM, интеграции и AI под ключ</p>
+          <div class="svc-when"><span>С чем приходят</span>Нужен цифровой продукт или автоматизация, и важно, чтобы его довели до запуска</div>
+        </div>
+        <div class="svc">
+          <div class="svc-top"><div class="svc-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></div><span class="svc-num">04</span></div>
+          <h3>Упаковка и аутстаффинг</h3>
+          <p>Запуск продуктов и усиление вашей команды профильными специалистами</p>
+          <div class="svc-when"><span>С чем приходят</span>Есть идея или своя команда, но не хватает рук и компетенций</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 03 SOLUTION + 04 WHY -->
-  <section id="services">
-    <div class="wrap split reveal">
-      <div class="panel">
-        <div class="tag"><b>03</b> Решение</div>
-        <h2>Комплексный подход<br>к развитию вашего бизнеса</h2>
-        <ul class="sol-list">
-          <li><svg class="arr"><use href="#i-arrow"/></svg><span><b>Бизнес-консалтинг:</b> аудит, поиск точек роста и оценка рисков</span></li>
-          <li><svg class="arr"><use href="#i-arrow"/></svg><span><b>Стратегия:</b> разработка бизнес- и маркетинговой стратегии</span></li>
-          <li><svg class="arr"><use href="#i-arrow"/></svg><span><b>IT-разработка:</b> сайты, веб- и мобильные приложения под ключ</span></li>
-          <li><svg class="arr"><use href="#i-arrow"/></svg><span><b>Упаковка и аутстаффинг:</b> запуск продуктов и усиление команды профильными специалистами</span></li>
-        </ul>
+  <!-- 03 PROCESS -->
+  <section id="process">
+    <div class="wrap reveal">
+      <div class="tag"><b>03</b> Как мы работаем</div>
+      <div class="process-head">
+        <h2 style="margin:0">Одна команда<br>на всех этапах</h2>
+        <p class="lede">Подключаемся на любом этапе. Можно ограничиться диагностикой и стратегией или пройти весь путь до запуска — без передачи проекта между подрядчиками</p>
       </div>
-      <div class="why" id="why">
-        <div class="tag"><b>04</b> Почему мы</div>
-        <h2>Мы — ваш стратегический партнер</h2>
-        <div class="why-list">
-          <div class="why-item"><b>Слаженная команда:</b> специалисты с опытом совместной работы</div>
-          <div class="why-item"><b>Международная экспертиза:</b> опыт реализации проектов в России и за рубежом</div>
-          <div class="why-item"><b>Гибкий подход:</b> команда и бюджет формируются под задачи бизнеса</div>
-        </div>
+      <div class="steps">
+        <button type="button" class="step" data-step="0" aria-haspopup="dialog"><div class="step-top"><span class="step-num">01</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Диагностика</h3><p>Аудит и интервью</p><span class="step-more">Подробнее</span></button>
+        <button type="button" class="step" data-step="1" aria-haspopup="dialog"><div class="step-top"><span class="step-num">02</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Стратегия и план</h3><p>Позиционирование и дорожная карта</p><span class="step-more">Подробнее</span></button>
+        <button type="button" class="step" data-step="2" aria-haspopup="dialog"><div class="step-top"><span class="step-num">03</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Проектирование</h3><p>Процессы, UX/UI, архитектура</p><span class="step-more">Подробнее</span></button>
+        <button type="button" class="step" data-step="3" aria-haspopup="dialog"><div class="step-top"><span class="step-num">04</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Реализация</h3><p>Разработка и внедрение</p><span class="step-more">Подробнее</span></button>
+        <button type="button" class="step" data-step="4" aria-haspopup="dialog"><div class="step-top"><span class="step-num">05</span><svg class="arr"><use href="#i-arrow"/></svg></div><h3>Запуск и рост</h3><p>Сопровождение</p><span class="step-more">Подробнее</span></button>
+      </div>
+      <div class="steps-legend">
+        <span><i class="lg-c"></i>Консалтинг: этапы 01–02</span>
+        <span><i class="lg-it"></i>Проектирование и IT: этапы 03–05</span>
+      </div>
+      <p class="steps-hint">Нажмите на этап, чтобы узнать, что входит в работу и что вы получите на выходе</p>
+    </div>
+  </section>
+
+  <!-- 04 WHY -->
+  <section id="why">
+    <div class="wrap reveal">
+      <div class="tag"><b>04</b> Почему мы</div>
+      <h2>Мы — ваш стратегический партнер</h2>
+      <div class="why-grid">
+        <div class="why-item"><b>Слаженная команда</b>Специалисты с опытом совместной работы</div>
+        <div class="why-item"><b>Международная экспертиза</b>Опыт реализации проектов в России и за рубежом</div>
+        <div class="why-item"><b>Гибкий подход</b>Команда и бюджет формируются под задачи бизнеса</div>
       </div>
     </div>
   </section>
@@ -820,7 +864,7 @@
 
 
   // step details
-  const STEPS = [{"t": "Стратегия", "k": "Позиционирование и план", "lead": "Прежде чем рисовать и писать код, разбираемся в бизнесе, рынке и задаче. Так продукт решает реальную проблему, а бюджет уходит на то, что принесёт результат.", "list": ["Интервью с вами и ключевыми сотрудниками, аудит текущих процессов и решений", "Анализ рынка, конкурентов и целевой аудитории", "Позиционирование и ценностное предложение продукта", "Приоритизация функций: что нужно в первой версии, а что — потом", "Дорожная карта с этапами, сроками, бюджетом и оценкой рисков"], "res": "стратегия и дорожная карта проекта — понятный план, сколько стоит и когда будет готово.", "ill": "<svg viewBox=\"0 0 320 240\">\n  <circle class=\"ill-dim\" cx=\"236\" cy=\"78\" r=\"52\"/><circle class=\"ill\" cx=\"236\" cy=\"78\" r=\"36\"/><circle class=\"ill-fill\" cx=\"236\" cy=\"78\" r=\"20\"/><circle class=\"ill\" cx=\"236\" cy=\"78\" r=\"20\"/><circle class=\"ill-solid\" cx=\"236\" cy=\"78\" r=\"5\"/>\n  <path class=\"ill ill-draw\" d=\"M34 206 C 80 206, 76 150, 124 150 S 170 120, 196 108 L 230 82\"/>\n  <path class=\"ill\" d=\"M218 82 L231 81 L229 94\"/>\n  <circle class=\"ill-solid\" cx=\"34\" cy=\"206\" r=\"5\"/><circle class=\"ill-solid\" cx=\"124\" cy=\"150\" r=\"5\"/>\n  <path class=\"ill-dim\" d=\"M124 150 V 104 M124 104 h26 l-6 7 l6 7 h-26\"/>\n  <rect class=\"ill-soft\" x=\"22\" y=\"40\" width=\"96\" height=\"64\" rx=\"10\"/><rect class=\"ill-dim\" x=\"22\" y=\"40\" width=\"96\" height=\"64\" rx=\"10\"/>\n  <path class=\"ill-dim\" d=\"M36 92 V80 M52 92 V70 M68 92 V76 M84 92 V60 M100 92 V66\"/>\n  <path class=\"ill\" d=\"M34 76 L52 64 L68 70 L84 54 L102 58\"/>\n  <text x=\"34\" y=\"226\" fill=\"rgba(255,255,255,.35)\" font-size=\"10\" font-family=\"Onest,sans-serif\">сейчас</text>\n  <text x=\"196\" y=\"152\" fill=\"rgba(228,172,104,.8)\" font-size=\"10\" font-family=\"Onest,sans-serif\">цель</text>\n</svg>"}, {"t": "UX/UI-дизайн", "k": "Прототип продукта", "lead": "Превращаем стратегию в продукт, которым удобно пользоваться. Проверяем идеи на прототипе — до того, как вложиться в разработку.", "list": ["Пользовательские сценарии и структура продукта", "Интерактивный прототип ключевых экранов", "Проверка прототипа на пользователях и доработка", "UI-дизайн в стиле вашего бренда, адаптив под мобильные", "Дизайн-система — чтобы продукт развивался в едином стиле"], "res": "кликабельный прототип и готовые макеты, по которым команда разработки сразу берётся за работу.", "ill": "<svg viewBox=\"0 0 320 240\">\n  <rect class=\"ill-soft\" x=\"150\" y=\"34\" width=\"150\" height=\"112\" rx=\"10\"/><rect class=\"ill-dim\" x=\"150\" y=\"34\" width=\"150\" height=\"112\" rx=\"10\"/>\n  <path class=\"ill-dim\" d=\"M150 52 H300\"/><circle class=\"ill-solid\" cx=\"162\" cy=\"43\" r=\"2.5\" opacity=\".6\"/><circle cx=\"171\" cy=\"43\" r=\"2.5\" fill=\"rgba(255,255,255,.3)\"/><circle cx=\"180\" cy=\"43\" r=\"2.5\" fill=\"rgba(255,255,255,.3)\"/>\n  <rect class=\"ill-fill\" x=\"162\" y=\"62\" width=\"126\" height=\"34\" rx=\"6\"/><rect class=\"ill\" x=\"162\" y=\"62\" width=\"126\" height=\"34\" rx=\"6\"/>\n  <rect class=\"ill-dim\" x=\"162\" y=\"104\" width=\"38\" height=\"30\" rx=\"5\"/><rect class=\"ill-dim\" x=\"206\" y=\"104\" width=\"38\" height=\"30\" rx=\"5\"/><rect class=\"ill-dim\" x=\"250\" y=\"104\" width=\"38\" height=\"30\" rx=\"5\"/>\n  <rect x=\"30\" y=\"58\" width=\"92\" height=\"160\" rx=\"16\" fill=\"#141516\"/><rect class=\"ill\" x=\"30\" y=\"58\" width=\"92\" height=\"160\" rx=\"16\"/>\n  <path class=\"ill-dim\" d=\"M64 68 h24\"/>\n  <rect class=\"ill-fill\" x=\"42\" y=\"82\" width=\"68\" height=\"44\" rx=\"6\"/>\n  <path class=\"ill-dim\" d=\"M42 138 h68 M42 148 h50 M42 158 h60\"/>\n  <rect class=\"ill\" x=\"42\" y=\"176\" width=\"68\" height=\"20\" rx=\"10\"/>\n  <path class=\"ill ill-draw\" d=\"M122 120 C 136 120, 140 96, 150 96\" stroke-dasharray=\"4 5\"/>\n  <path d=\"M232 150 l0 34 l9 -9 l7 15 l6 -3 l-7 -14 l13 0 z\" fill=\"#f2f1ee\" stroke=\"#0d0d0d\" stroke-width=\"1.5\" stroke-linejoin=\"round\"/>\n  <circle class=\"ill-dim\" cx=\"232\" cy=\"150\" r=\"14\"/>\n</svg>"}, {"t": "Разработка", "k": "Frontend и Backend", "lead": "Собираем продукт итерациями и регулярно показываем промежуточный результат — вы видите прогресс, а не ждёте «чёрный ящик» в конце.", "list": ["Архитектура и выбор технологий под задачу и масштаб", "Frontend: сайты, веб-платформы, личные кабинеты", "Backend, API и базы данных", "Мобильные приложения и MVP", "Интеграции: CRM, оплата, 1С, документооборот, AI-ассистенты"], "res": "работающий продукт на тестовом сервере, исходный код и документация остаются у вас.", "ill": "<svg viewBox=\"0 0 320 240\">\n  <rect x=\"24\" y=\"30\" width=\"186\" height=\"140\" rx=\"12\" fill=\"#121413\"/><rect class=\"ill-dim\" x=\"24\" y=\"30\" width=\"186\" height=\"140\" rx=\"12\"/>\n  <path class=\"ill-dim\" d=\"M24 50 H210\"/><circle cx=\"38\" cy=\"40\" r=\"3\" fill=\"rgba(255,255,255,.25)\"/><circle cx=\"48\" cy=\"40\" r=\"3\" fill=\"rgba(255,255,255,.25)\"/><circle cx=\"58\" cy=\"40\" r=\"3\" fill=\"rgba(255,255,255,.25)\"/>\n  <g stroke-width=\"5\" stroke-linecap=\"round\">\n    <path d=\"M40 66 h30\" stroke=\"#c792ea\"/><path d=\"M76 66 h50\" stroke=\"rgba(255,255,255,.35)\"/>\n    <path d=\"M52 82 h40\" stroke=\"rgba(255,255,255,.35)\"/><path d=\"M98 82 h56\" stroke=\"#e4ac68\"/>\n    <path d=\"M52 98 h26\" stroke=\"#8fd3a8\"/><path d=\"M84 98 h70\" stroke=\"rgba(255,255,255,.35)\"/>\n    <path d=\"M52 114 h60\" stroke=\"rgba(255,255,255,.35)\"/><path d=\"M118 114 h30\" stroke=\"#e4ac68\"/>\n    <path d=\"M40 130 h20\" stroke=\"#c792ea\"/>\n    <path d=\"M40 150 h90\" stroke=\"rgba(255,255,255,.18)\"/>\n  </g>\n  <path class=\"ill\" d=\"M168 128 l-12 12 l12 12 M196 128 l12 12 l-12 12 M188 124 l-12 32\"/>\n  <g transform=\"translate(222 92)\">\n    <rect class=\"ill-soft\" x=\"0\" y=\"0\" width=\"76\" height=\"30\" rx=\"7\"/><rect class=\"ill\" x=\"0\" y=\"0\" width=\"76\" height=\"30\" rx=\"7\"/>\n    <rect class=\"ill-soft\" x=\"0\" y=\"38\" width=\"76\" height=\"30\" rx=\"7\"/><rect class=\"ill\" x=\"0\" y=\"38\" width=\"76\" height=\"30\" rx=\"7\"/>\n    <rect class=\"ill-soft\" x=\"0\" y=\"76\" width=\"76\" height=\"30\" rx=\"7\"/><rect class=\"ill\" x=\"0\" y=\"76\" width=\"76\" height=\"30\" rx=\"7\"/>\n    <circle class=\"ill-solid\" cx=\"14\" cy=\"15\" r=\"3.5\"/><circle cx=\"14\" cy=\"53\" r=\"3.5\" fill=\"#6fae88\"/><circle class=\"ill-solid\" cx=\"14\" cy=\"91\" r=\"3.5\"/>\n    <path class=\"ill-dim\" d=\"M28 15 h34 M28 53 h34 M28 91 h34\"/>\n  </g>\n  <path class=\"ill ill-draw\" d=\"M210 110 C 216 110, 216 107, 222 107\" stroke-dasharray=\"3 4\"/>\n  <text x=\"222\" y=\"80\" fill=\"rgba(255,255,255,.35)\" font-size=\"10\" font-family=\"Onest,sans-serif\">API · DB</text>\n</svg>"}, {"t": "Тестирование", "k": "Контроль качества", "lead": "Проверяем продукт до того, как его увидят ваши клиенты. Ошибку дешевле найти на тесте, чем после запуска.", "list": ["Функциональное и регрессионное тестирование", "Проверка на разных устройствах и в браузерах", "Производительность и нагрузка", "Базовые проверки безопасности", "Приёмка вместе с вами по заранее согласованным критериям"], "res": "стабильная версия, готовая к релизу, и отчёт о качестве.", "ill": "<svg viewBox=\"0 0 320 240\">\n  <rect x=\"30\" y=\"28\" width=\"150\" height=\"188\" rx=\"14\" fill=\"#121413\"/><rect class=\"ill-dim\" x=\"30\" y=\"28\" width=\"150\" height=\"188\" rx=\"14\"/>\n  <rect class=\"ill-fill\" x=\"78\" y=\"20\" width=\"54\" height=\"18\" rx=\"9\"/><rect class=\"ill\" x=\"78\" y=\"20\" width=\"54\" height=\"18\" rx=\"9\"/>\n  <g>\n    <rect class=\"ill\" x=\"48\" y=\"60\" width=\"18\" height=\"18\" rx=\"5\"/><path class=\"ill-green\" d=\"M52 69 l4 4 l7 -8\"/><path class=\"ill-dim\" d=\"M78 69 h82\"/>\n    <rect class=\"ill\" x=\"48\" y=\"96\" width=\"18\" height=\"18\" rx=\"5\"/><path class=\"ill-green\" d=\"M52 105 l4 4 l7 -8\"/><path class=\"ill-dim\" d=\"M78 105 h66\"/>\n    <rect class=\"ill\" x=\"48\" y=\"132\" width=\"18\" height=\"18\" rx=\"5\"/><path class=\"ill-green\" d=\"M52 141 l4 4 l7 -8\"/><path class=\"ill-dim\" d=\"M78 141 h76\"/>\n    <rect class=\"ill\" x=\"48\" y=\"168\" width=\"18\" height=\"18\" rx=\"5\"/><path class=\"ill-dim\" d=\"M78 177 h56\"/>\n  </g>\n  <path class=\"ill-fill\" d=\"M244 54 l50 18 v40 c0 34 -22 58 -50 66 c-28 -8 -50 -32 -50 -66 v-40 z\"/>\n  <path class=\"ill ill-draw\" d=\"M244 54 l50 18 v40 c0 34 -22 58 -50 66 c-28 -8 -50 -32 -50 -66 v-40 z\"/>\n  <path class=\"ill\" d=\"M224 116 l14 14 l28 -30\" stroke-width=\"2.4\"/>\n  <circle class=\"ill-dim\" cx=\"244\" cy=\"116\" r=\"78\" stroke-dasharray=\"2 6\"/>\n</svg>"}, {"t": "Запуск и рост", "k": "Сопровождение", "lead": "Выводим продукт на рынок и не исчезаем после релиза: помогаем привлечь первых пользователей и развивать продукт по данным.", "list": ["Публикация: серверы, домен, App Store и Google Play", "Подключение аналитики и ключевых метрик", "Маркетинговый запуск и PR", "Техническая поддержка и исправления", "Развитие продукта на основе данных и обратной связи"], "res": "живой продукт с аналитикой, поддержкой и планом дальнейшего развития.", "ill": "<svg viewBox=\"0 0 320 240\">\n  <path class=\"ill-dim\" d=\"M30 206 H296 M30 206 V40\"/>\n  <path class=\"ill-dim\" d=\"M30 166 H296 M30 126 H296 M30 86 H296\" stroke-dasharray=\"2 6\"/>\n  <g class=\"ill-soft\"><rect x=\"48\" y=\"176\" width=\"22\" height=\"30\" rx=\"4\"/><rect x=\"88\" y=\"160\" width=\"22\" height=\"46\" rx=\"4\"/><rect x=\"128\" y=\"146\" width=\"22\" height=\"60\" rx=\"4\"/><rect x=\"168\" y=\"120\" width=\"22\" height=\"86\" rx=\"4\"/><rect x=\"208\" y=\"98\" width=\"22\" height=\"108\" rx=\"4\"/></g>\n  <path class=\"ill-fill\" d=\"M40 190 L100 168 L140 160 L180 128 L220 104 L262 64 L262 206 L40 206 Z\" opacity=\".7\"/>\n  <path class=\"ill ill-draw\" d=\"M40 190 L100 168 L140 160 L180 128 L220 104 L262 64\" stroke-width=\"2.2\"/>\n  <circle class=\"ill-solid\" cx=\"100\" cy=\"168\" r=\"4\"/><circle class=\"ill-solid\" cx=\"180\" cy=\"128\" r=\"4\"/><circle class=\"ill-solid\" cx=\"220\" cy=\"104\" r=\"4\"/>\n  <ellipse class=\"ill-dim\" cx=\"262\" cy=\"60\" rx=\"38\" ry=\"16\" transform=\"rotate(-24 262 60)\"/>\n  <path d=\"M262 30 C264 52 266 56 290 58 C266 60 264 64 262 86 C260 64 258 60 234 58 C258 56 260 52 262 30Z\" fill=\"#e4ac68\"/>\n  <text x=\"34\" y=\"226\" fill=\"rgba(255,255,255,.35)\" font-size=\"10\" font-family=\"Onest,sans-serif\">запуск</text>\n  <text x=\"236\" y=\"226\" fill=\"rgba(228,172,104,.8)\" font-size=\"10\" font-family=\"Onest,sans-serif\">рост</text>\n</svg>"}];
+  const STEPS = [{"t": "Диагностика", "k": "Аудит и интервью", "ill": "<svg viewBox=\"0 0 320 240\">\n  <g>\n    <rect class=\"ill-soft\" x=\"26\" y=\"92\" width=\"62\" height=\"40\" rx=\"9\"/><rect class=\"ill-dim\" x=\"26\" y=\"92\" width=\"62\" height=\"40\" rx=\"9\"/>\n    <rect class=\"ill-soft\" x=\"120\" y=\"52\" width=\"62\" height=\"40\" rx=\"9\"/><rect class=\"ill-dim\" x=\"120\" y=\"52\" width=\"62\" height=\"40\" rx=\"9\"/>\n    <rect class=\"ill-soft\" x=\"120\" y=\"134\" width=\"62\" height=\"40\" rx=\"9\"/><rect class=\"ill-dim\" x=\"120\" y=\"134\" width=\"62\" height=\"40\" rx=\"9\"/>\n    <rect class=\"ill-fill\" x=\"214\" y=\"92\" width=\"62\" height=\"40\" rx=\"9\"/><rect class=\"ill\" x=\"214\" y=\"92\" width=\"62\" height=\"40\" rx=\"9\"/>\n    <path class=\"ill-dim\" d=\"M88 104 C 104 104, 104 72, 120 72 M88 120 C 104 120, 104 154, 120 154 M182 72 C 198 72, 198 104, 214 104\"/>\n    <path class=\"ill\" d=\"M182 154 C 198 154, 198 120, 214 120\" stroke-dasharray=\"3 4\"/>\n    <path class=\"ill-dim\" d=\"M38 108 h38 M38 118 h26 M132 68 h38 M132 78 h24 M132 150 h38 M132 160 h20\"/>\n    <path class=\"ill\" d=\"M226 108 h38 M226 118 h22\"/>\n  </g>\n  <circle class=\"ill-fill\" cx=\"196\" cy=\"140\" r=\"34\"/>\n  <circle class=\"ill ill-draw\" cx=\"196\" cy=\"140\" r=\"34\" stroke-width=\"2\"/>\n  <path class=\"ill\" d=\"M220 164 L250 194\" stroke-width=\"5\"/>\n  <circle class=\"ill-solid\" cx=\"196\" cy=\"140\" r=\"4\"/>\n  <path class=\"ill\" d=\"M188 132 l16 16 M204 132 l-16 16\" stroke-width=\"1.4\" opacity=\".0\"/>\n  <text x=\"168\" y=\"198\" fill=\"rgba(228,172,104,.85)\" font-size=\"10\" font-family=\"Onest,sans-serif\">точка роста</text>\n</svg>", "lead": "Начинаем с того, как всё устроено сейчас: бизнес, процессы, продажи и IT. Находим, где теряются деньги, время и клиенты.", "list": ["Интервью с собственником и ключевыми сотрудниками", "Аудит бизнес-процессов, продаж и маркетинга", "IT-аудит: системы, данные, интеграции", "Анализ рынка и конкурентов", "Карта проблем и точек роста с оценкой эффекта"], "res": "отчёт-диагностика: что мешает расти и какие шаги дадут наибольший эффект."}, {"t": "Стратегия и план", "k": "Позиционирование и дорожная карта", "ill": "<svg viewBox=\"0 0 320 240\">\n  <circle class=\"ill-dim\" cx=\"236\" cy=\"78\" r=\"52\"/><circle class=\"ill\" cx=\"236\" cy=\"78\" r=\"36\"/><circle class=\"ill-fill\" cx=\"236\" cy=\"78\" r=\"20\"/><circle class=\"ill\" cx=\"236\" cy=\"78\" r=\"20\"/><circle class=\"ill-solid\" cx=\"236\" cy=\"78\" r=\"5\"/>\n  <path class=\"ill ill-draw\" d=\"M34 206 C 80 206, 76 150, 124 150 S 170 120, 196 108 L 230 82\"/>\n  <path class=\"ill\" d=\"M218 82 L231 81 L229 94\"/>\n  <circle class=\"ill-solid\" cx=\"34\" cy=\"206\" r=\"5\"/><circle class=\"ill-solid\" cx=\"124\" cy=\"150\" r=\"5\"/>\n  <path class=\"ill-dim\" d=\"M124 150 V 104 M124 104 h26 l-6 7 l6 7 h-26\"/>\n  <rect class=\"ill-soft\" x=\"22\" y=\"40\" width=\"96\" height=\"64\" rx=\"10\"/><rect class=\"ill-dim\" x=\"22\" y=\"40\" width=\"96\" height=\"64\" rx=\"10\"/>\n  <path class=\"ill-dim\" d=\"M36 92 V80 M52 92 V70 M68 92 V76 M84 92 V60 M100 92 V66\"/>\n  <path class=\"ill\" d=\"M34 76 L52 64 L68 70 L84 54 L102 58\"/>\n  <text x=\"34\" y=\"226\" fill=\"rgba(255,255,255,.35)\" font-size=\"10\" font-family=\"Onest,sans-serif\">сейчас</text>\n  <text x=\"196\" y=\"152\" fill=\"rgba(228,172,104,.8)\" font-size=\"10\" font-family=\"Onest,sans-serif\">цель</text>\n</svg>", "lead": "Превращаем выводы диагностики в план действий, понятный вам, команде и партнёрам.", "list": ["Бизнес- и маркетинговая стратегия", "Позиционирование и ценностное предложение", "Выбор решений: что делать, в каком порядке и от чего отказаться", "Дорожная карта с этапами, сроками и бюджетом", "Оценка рисков и метрики успеха"], "res": "стратегия и дорожная карта. На этом можно остановиться и реализовать план своими силами — или продолжить с нами."}, {"t": "Проектирование", "k": "Процессы, UX/UI, архитектура", "ill": "<svg viewBox=\"0 0 320 240\">\n  <rect class=\"ill-soft\" x=\"150\" y=\"34\" width=\"150\" height=\"112\" rx=\"10\"/><rect class=\"ill-dim\" x=\"150\" y=\"34\" width=\"150\" height=\"112\" rx=\"10\"/>\n  <path class=\"ill-dim\" d=\"M150 52 H300\"/><circle class=\"ill-solid\" cx=\"162\" cy=\"43\" r=\"2.5\" opacity=\".6\"/><circle cx=\"171\" cy=\"43\" r=\"2.5\" fill=\"rgba(255,255,255,.3)\"/><circle cx=\"180\" cy=\"43\" r=\"2.5\" fill=\"rgba(255,255,255,.3)\"/>\n  <rect class=\"ill-fill\" x=\"162\" y=\"62\" width=\"126\" height=\"34\" rx=\"6\"/><rect class=\"ill\" x=\"162\" y=\"62\" width=\"126\" height=\"34\" rx=\"6\"/>\n  <rect class=\"ill-dim\" x=\"162\" y=\"104\" width=\"38\" height=\"30\" rx=\"5\"/><rect class=\"ill-dim\" x=\"206\" y=\"104\" width=\"38\" height=\"30\" rx=\"5\"/><rect class=\"ill-dim\" x=\"250\" y=\"104\" width=\"38\" height=\"30\" rx=\"5\"/>\n  <rect x=\"30\" y=\"58\" width=\"92\" height=\"160\" rx=\"16\" fill=\"#141516\"/><rect class=\"ill\" x=\"30\" y=\"58\" width=\"92\" height=\"160\" rx=\"16\"/>\n  <path class=\"ill-dim\" d=\"M64 68 h24\"/>\n  <rect class=\"ill-fill\" x=\"42\" y=\"82\" width=\"68\" height=\"44\" rx=\"6\"/>\n  <path class=\"ill-dim\" d=\"M42 138 h68 M42 148 h50 M42 158 h60\"/>\n  <rect class=\"ill\" x=\"42\" y=\"176\" width=\"68\" height=\"20\" rx=\"10\"/>\n  <path class=\"ill ill-draw\" d=\"M122 120 C 136 120, 140 96, 150 96\" stroke-dasharray=\"4 5\"/>\n  <path d=\"M232 150 l0 34 l9 -9 l7 15 l6 -3 l-7 -14 l13 0 z\" fill=\"#f2f1ee\" stroke=\"#0d0d0d\" stroke-width=\"1.5\" stroke-linejoin=\"round\"/>\n  <circle class=\"ill-dim\" cx=\"232\" cy=\"150\" r=\"14\"/>\n</svg>", "lead": "Прежде чем строить, проектируем: как будут работать процессы, продукт и системы. Проверяем решения на прототипе — до того, как вложиться в реализацию.", "list": ["Целевые бизнес-процессы и требования", "Пользовательские сценарии и интерактивный прототип", "UI-дизайн и дизайн-система в стиле бренда", "Архитектура решения и выбор технологий", "Техническое задание и смета на реализацию"], "res": "прототип, макеты и ТЗ — точная смета и сроки до старта реализации."}, {"t": "Реализация", "k": "Разработка и внедрение", "ill": "<svg viewBox=\"0 0 320 240\">\n  <rect x=\"24\" y=\"30\" width=\"186\" height=\"140\" rx=\"12\" fill=\"#121413\"/><rect class=\"ill-dim\" x=\"24\" y=\"30\" width=\"186\" height=\"140\" rx=\"12\"/>\n  <path class=\"ill-dim\" d=\"M24 50 H210\"/><circle cx=\"38\" cy=\"40\" r=\"3\" fill=\"rgba(255,255,255,.25)\"/><circle cx=\"48\" cy=\"40\" r=\"3\" fill=\"rgba(255,255,255,.25)\"/><circle cx=\"58\" cy=\"40\" r=\"3\" fill=\"rgba(255,255,255,.25)\"/>\n  <g stroke-width=\"5\" stroke-linecap=\"round\">\n    <path d=\"M40 66 h30\" stroke=\"#c792ea\"/><path d=\"M76 66 h50\" stroke=\"rgba(255,255,255,.35)\"/>\n    <path d=\"M52 82 h40\" stroke=\"rgba(255,255,255,.35)\"/><path d=\"M98 82 h56\" stroke=\"#e4ac68\"/>\n    <path d=\"M52 98 h26\" stroke=\"#8fd3a8\"/><path d=\"M84 98 h70\" stroke=\"rgba(255,255,255,.35)\"/>\n    <path d=\"M52 114 h60\" stroke=\"rgba(255,255,255,.35)\"/><path d=\"M118 114 h30\" stroke=\"#e4ac68\"/>\n    <path d=\"M40 130 h20\" stroke=\"#c792ea\"/>\n    <path d=\"M40 150 h90\" stroke=\"rgba(255,255,255,.18)\"/>\n  </g>\n  <path class=\"ill\" d=\"M168 128 l-12 12 l12 12 M196 128 l12 12 l-12 12 M188 124 l-12 32\"/>\n  <g transform=\"translate(222 92)\">\n    <rect class=\"ill-soft\" x=\"0\" y=\"0\" width=\"76\" height=\"30\" rx=\"7\"/><rect class=\"ill\" x=\"0\" y=\"0\" width=\"76\" height=\"30\" rx=\"7\"/>\n    <rect class=\"ill-soft\" x=\"0\" y=\"38\" width=\"76\" height=\"30\" rx=\"7\"/><rect class=\"ill\" x=\"0\" y=\"38\" width=\"76\" height=\"30\" rx=\"7\"/>\n    <rect class=\"ill-soft\" x=\"0\" y=\"76\" width=\"76\" height=\"30\" rx=\"7\"/><rect class=\"ill\" x=\"0\" y=\"76\" width=\"76\" height=\"30\" rx=\"7\"/>\n    <circle class=\"ill-solid\" cx=\"14\" cy=\"15\" r=\"3.5\"/><circle cx=\"14\" cy=\"53\" r=\"3.5\" fill=\"#6fae88\"/><circle class=\"ill-solid\" cx=\"14\" cy=\"91\" r=\"3.5\"/>\n    <path class=\"ill-dim\" d=\"M28 15 h34 M28 53 h34 M28 91 h34\"/>\n  </g>\n  <path class=\"ill ill-draw\" d=\"M210 110 C 216 110, 216 107, 222 107\" stroke-dasharray=\"3 4\"/>\n  <text x=\"222\" y=\"80\" fill=\"rgba(255,255,255,.35)\" font-size=\"10\" font-family=\"Onest,sans-serif\">API · DB</text>\n</svg>", "lead": "Собираем и внедряем решение итерациями: регулярно показываем результат и тестируем каждый релиз.", "list": ["Сайты, веб-платформы, личные кабинеты, мобильные приложения", "Backend, API и интеграции: CRM, оплата, 1С, AI-ассистенты", "Тестирование и контроль качества перед каждым релизом", "Внедрение в процессы и обучение вашей команды", "Усиление вашей команды профильными специалистами"], "res": "работающее решение, внедрённое в бизнес; исходный код и документация остаются у вас."}, {"t": "Запуск и рост", "k": "Сопровождение", "ill": "<svg viewBox=\"0 0 320 240\">\n  <path class=\"ill-dim\" d=\"M30 206 H296 M30 206 V40\"/>\n  <path class=\"ill-dim\" d=\"M30 166 H296 M30 126 H296 M30 86 H296\" stroke-dasharray=\"2 6\"/>\n  <g class=\"ill-soft\"><rect x=\"48\" y=\"176\" width=\"22\" height=\"30\" rx=\"4\"/><rect x=\"88\" y=\"160\" width=\"22\" height=\"46\" rx=\"4\"/><rect x=\"128\" y=\"146\" width=\"22\" height=\"60\" rx=\"4\"/><rect x=\"168\" y=\"120\" width=\"22\" height=\"86\" rx=\"4\"/><rect x=\"208\" y=\"98\" width=\"22\" height=\"108\" rx=\"4\"/></g>\n  <path class=\"ill-fill\" d=\"M40 190 L100 168 L140 160 L180 128 L220 104 L262 64 L262 206 L40 206 Z\" opacity=\".7\"/>\n  <path class=\"ill ill-draw\" d=\"M40 190 L100 168 L140 160 L180 128 L220 104 L262 64\" stroke-width=\"2.2\"/>\n  <circle class=\"ill-solid\" cx=\"100\" cy=\"168\" r=\"4\"/><circle class=\"ill-solid\" cx=\"180\" cy=\"128\" r=\"4\"/><circle class=\"ill-solid\" cx=\"220\" cy=\"104\" r=\"4\"/>\n  <ellipse class=\"ill-dim\" cx=\"262\" cy=\"60\" rx=\"38\" ry=\"16\" transform=\"rotate(-24 262 60)\"/>\n  <path d=\"M262 30 C264 52 266 56 290 58 C266 60 264 64 262 86 C260 64 258 60 234 58 C258 56 260 52 262 30Z\" fill=\"#e4ac68\"/>\n  <text x=\"34\" y=\"226\" fill=\"rgba(255,255,255,.35)\" font-size=\"10\" font-family=\"Onest,sans-serif\">запуск</text>\n  <text x=\"236\" y=\"226\" fill=\"rgba(228,172,104,.8)\" font-size=\"10\" font-family=\"Onest,sans-serif\">рост</text>\n</svg>", "lead": "Выводим продукт на рынок и не исчезаем после релиза: помогаем привлечь первых клиентов и развиваем решение по данным.", "list": ["Публикация: серверы, домен, App Store и Google Play", "Маркетинговый запуск и PR", "Аналитика и ключевые метрики", "Техническая поддержка и развитие", "Регулярные стратегические сессии по результатам"], "res": "работающий бизнес-результат с аналитикой, поддержкой и планом дальнейшего роста."}];
   const sdOverlay = document.getElementById('stepOverlay');
   const sd = id => document.getElementById(id);
   let sdIdx = 0, sdLast = null;

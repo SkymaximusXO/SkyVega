@@ -396,6 +396,7 @@
   .privacy-details summary{ cursor:pointer; color:var(--accent); }
   .privacy-details p{ margin-top:8px; line-height:1.5; }
   .form-submit{ width:100%; }
+  .hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
   .form-status{ margin-top:14px; font-size:14px; text-align:center; display:none; }
   .form-status.show{ display:block; }
   .form-status.ok{ color:#7fc59a; }
@@ -802,6 +803,7 @@
         <summary>Что это значит?</summary>
         <p>Мы используем контактные данные только для связи по вашей заявке и не передаём их третьим лицам. Полная версия политики будет опубликована отдельно.</p>
       </details>
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button type="submit" class="btn btn-primary form-submit">Отправить заявку</button>
       <p class="form-status" id="formStatus"></p>
     </form>
@@ -954,18 +956,19 @@
     formStatus.className = 'form-status show';
     formStatus.textContent = 'Отправляем...';
     const data = new FormData(projectForm);
-    data.append('_subject', 'Новая заявка с сайта СКАЙВЕГА');
+    data.append('access_key', '9ab0e4fe-ff4b-438a-baea-b5cf565c8dd8'); // Web3Forms key (public by design)
+    data.append('subject', 'Новая заявка с сайта СКАЙВЕГА');
+    data.append('from_name', 'Сайт СКАЙВЕГА');
     const btn = projectForm.querySelector('.form-submit');
     btn.disabled = true;
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 20000);
     try {
-      // FormSubmit alias (hides the target email from the public code)
-      const res = await fetch('https://formsubmit.co/ajax/a82b73b0036b7fcbebc80a6117d78855', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST', headers: { 'Accept': 'application/json' }, body: data, signal: ctrl.signal
       });
       const json = await res.json().catch(() => ({}));
-      if (!res.ok || String(json.success) === 'false') throw new Error(json.message || 'bad response');
+      if (!res.ok || json.success !== true) throw new Error(json.message || 'bad response');
       formStatus.className = 'form-status show ok';
       formStatus.textContent = 'Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
       projectForm.reset();

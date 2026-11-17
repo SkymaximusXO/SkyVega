@@ -27,7 +27,8 @@ If the One-Pager changes, the site should be re-synced to it.
 - Team leads (2026-11-14): Максим Небов — Фаундер; Анна Михайлова — Соучредитель;
   Полина Рахматуллина — CMO. Below them a "Команда специалистов" panel with
   role cards (no names/headcount by founder's choice).
-- "Обсудить проект" opens a modal form → FormSubmit.co AJAX.
+- "Оставить заявку" (contact block) opens a modal form → Web3Forms AJAX.
+  Other CTAs are "Связаться с нами" and scroll to #contact.
 
 ## Design notes (2026-11-14 redesign)
 - Font: **Onest** (same as One-Pager) + JetBrains Mono for code accents.
@@ -46,15 +47,15 @@ If the One-Pager changes, the site should be re-synced to it.
 - Single file, no framework, no build step — keep it that way.
 
 ## Known placeholders — do not treat as real data
-- Form posts to FormSubmit alias `a82b73b0036b7fcbebc80a6117d78855` (= founder's
-  test Gmail; raw address removed from code 2026-11-17). Activation link was
-  sent 2026-11-17; formsubmit.co confirm page didn't load on founder's network —
-  needs another network/VPN. If FormSubmit proves unreachable from RU, switch
-  service. Swap to company inbox later (new alias needed).
+- Form posts to **Web3Forms** (since 2026-11-17; FormSubmit dropped — its
+  activation page returned 500). Access key `9ab0e4fe-ff4b-438a-baea-b5cf565c8dd8`
+  (public by design), account maxim.nebov@googlemail.com (founder's test Gmail),
+  domain set to skymaximusxo.github.io — update in app.web3forms.com when the
+  real domain / company inbox arrive. Free plan: 250 submissions/month.
+  Honeypot field `botcheck`.
 - Contacts (founder, 2026-11-14): phone **+7 (911) 979-06-07** (header, menu,
   contact, footer) and email **info@skyvega.ru** (contact block, footer, form
-  error text). The form itself still posts to the test address — founder
-  asked to leave it as is. The skyvega.ru mailbox must actually exist and
+  error text). The form delivers to the founder's test Gmail via Web3Forms. The skyvega.ru mailbox must actually exist and
   receive mail. Telegram not yet provided.
 - Consent "Что это значит?" text is not a real privacy policy (152-ФЗ).
 - Insights section removed (no content). Re-add when there are real posts/cases.
@@ -62,7 +63,7 @@ If the One-Pager changes, the site should be re-synced to it.
 ## Open questions for the founder
 - Real Telegram handle; confirm info@skyvega.ru mailbox is set up.
 - Domain name → `CNAME` file + GitHub Pages setting + DNS.
-- Is FormSubmit.co reachable from Russian ISPs? If not → Web3Forms or similar.
+- Confirm Web3Forms submissions arrive reliably from Russian networks.
 - Real privacy policy text.
 
 ## Backlog

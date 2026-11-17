@@ -46,8 +46,11 @@ If the One-Pager changes, the site should be re-synced to it.
 - Single file, no framework, no build step — keep it that way.
 
 ## Known placeholders — do not treat as real data
-- Form target email `maxim.nebov@googlemail.com` — test address; swap for
-  the company inbox. FormSubmit needs a one-time confirmation click.
+- Form posts to FormSubmit alias `a82b73b0036b7fcbebc80a6117d78855` (= founder's
+  test Gmail; raw address removed from code 2026-11-17). Activation link was
+  sent 2026-11-17; formsubmit.co confirm page didn't load on founder's network —
+  needs another network/VPN. If FormSubmit proves unreachable from RU, switch
+  service. Swap to company inbox later (new alias needed).
 - Contacts (founder, 2026-11-14): phone **+7 (911) 979-06-07** (header, menu,
   contact, footer) and email **info@skyvega.ru** (contact block, footer, form
   error text). The form itself still posts to the test address — founder
@@ -64,7 +67,6 @@ If the One-Pager changes, the site should be re-synced to it.
 
 ## Backlog
 - Yandex.Metrika / Webmaster verification.
-- Personal email exposed in public repo — use FormSubmit hashed alias.
 - 152-ФЗ: data goes to a US service + Gmail; consent must be a separate doc.
 - Form: phone/Telegram as alternative to email; consent should link to policy.
 - OG image: currently the logo PNG; a dedicated 1200×630 card would be better.

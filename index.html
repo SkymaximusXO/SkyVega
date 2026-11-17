@@ -955,11 +955,17 @@
     formStatus.textContent = 'Отправляем...';
     const data = new FormData(projectForm);
     data.append('_subject', 'Новая заявка с сайта СКАЙВЕГА');
+    const btn = projectForm.querySelector('.form-submit');
+    btn.disabled = true;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 20000);
     try {
-      const res = await fetch('https://formsubmit.co/ajax/maxim.nebov@googlemail.com', {
-        method: 'POST', headers: { 'Accept': 'application/json' }, body: data
+      // FormSubmit alias (hides the target email from the public code)
+      const res = await fetch('https://formsubmit.co/ajax/a82b73b0036b7fcbebc80a6117d78855', {
+        method: 'POST', headers: { 'Accept': 'application/json' }, body: data, signal: ctrl.signal
       });
-      if (!res.ok) throw new Error('bad response');
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || String(json.success) === 'false') throw new Error(json.message || 'bad response');
       formStatus.className = 'form-status show ok';
       formStatus.textContent = 'Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
       projectForm.reset();
@@ -967,6 +973,9 @@
     } catch (err) {
       formStatus.className = 'form-status show err';
       formStatus.textContent = 'Не получилось отправить. Позвоните: +7 (911) 979-06-07 или напишите на info@skyvega.ru';
+    } finally {
+      clearTimeout(timer);
+      btn.disabled = false;
     }
   });
 </script>

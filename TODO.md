@@ -14,7 +14,8 @@ If the One-Pager changes, the site should be re-synced to it.
 ## Form: Яндекс Формы (2026-11-22)
 - Web3Forms removed. Modal "Оставить заявку" now embeds a Яндекс Формы iframe
   (lazy-loaded on first open). Set the form link in `YA_FORM_URL` in the script.
-- While `YA_FORM_URL` is empty the modal shows phone + mailto info@skyvega.ru.
+- Form URL: https://forms.yandex.ru/cloud/6b02de7aba5f028b10271e52/ (dark theme set in Яндекс Формы to match site; email → info@skyvega.ru).
+- If `YA_FORM_URL` is emptied, the modal falls back to phone + mailto.
 - Mail: Яндекс 360 для бизнеса, domain skyvega.ru (MX/SPF/DKIM set at Рег.ру),
   mailbox info@skyvega.ru (+ alias maxim@), organization registered to an individual.
 

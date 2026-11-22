@@ -396,7 +396,7 @@
   .privacy-details summary{ cursor:pointer; color:var(--accent); }
   .privacy-details p{ margin-top:8px; line-height:1.5; }
   .form-submit{ width:100%; }
-  .ya-form iframe{ display:block; width:100%; min-height:560px; border:0; border-radius:14px; background:#fff; }
+  .ya-form iframe{ display:block; width:100%; min-height:900px; border:0; border-radius:14px; background:#141415; }
   .form-fallback{ display:none; flex-direction:column; gap:12px; }
   .form-fallback.show{ display:flex; }
   .form-fallback p{ color:var(--text-dim); font-size:14.5px; margin-bottom:4px; }
@@ -910,7 +910,7 @@
   const modalClose = document.getElementById('modalClose');
   // Яндекс Формы: вставьте сюда ссылку на форму (forms.yandex.ru/cloud/…/ или /u/…/).
   // Пока пусто — в окне показываются телефон и почта.
-  const YA_FORM_URL = '';
+  const YA_FORM_URL = 'https://forms.yandex.ru/cloud/6b02de7aba5f028b10271e52/';
   const yaForm = document.getElementById('yaForm');
   const formFallback = document.getElementById('formFallback');
   let yaLoaded = false;

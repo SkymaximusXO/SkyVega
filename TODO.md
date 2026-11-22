@@ -11,6 +11,13 @@ Backup of the pre-rework version: branch `claude/backup-2026-11-14-before-proces
 One-Pager should be updated to match.
 If the One-Pager changes, the site should be re-synced to it.
 
+## Form: Яндекс Формы (2026-11-22)
+- Web3Forms removed. Modal "Оставить заявку" now embeds a Яндекс Формы iframe
+  (lazy-loaded on first open). Set the form link in `YA_FORM_URL` in the script.
+- While `YA_FORM_URL` is empty the modal shows phone + mailto info@skyvega.ru.
+- Mail: Яндекс 360 для бизнеса, domain skyvega.ru (MX/SPF/DKIM set at Рег.ру),
+  mailbox info@skyvega.ru (+ alias maxim@), organization registered to an individual.
+
 ## Repository — always work here
 - GitHub repo: **SkymaximusXO/SkyVega** (public, push access granted).
 - At the start of a session: attach with `add_repo` (owner `SkymaximusXO`,

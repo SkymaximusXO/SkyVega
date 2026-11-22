@@ -396,6 +396,10 @@
   .privacy-details summary{ cursor:pointer; color:var(--accent); }
   .privacy-details p{ margin-top:8px; line-height:1.5; }
   .form-submit{ width:100%; }
+  .ya-form iframe{ display:block; width:100%; min-height:560px; border:0; border-radius:14px; background:#fff; }
+  .form-fallback{ display:none; flex-direction:column; gap:12px; }
+  .form-fallback.show{ display:flex; }
+  .form-fallback p{ color:var(--text-dim); font-size:14.5px; margin-bottom:4px; }
   .hp{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
   .form-status{ margin-top:14px; font-size:14px; text-align:center; display:none; }
   .form-status.show{ display:block; }
@@ -772,41 +776,13 @@
       <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
     </div>
     <p class="modal-sub">Расскажите о задаче — ответим и предложим состав команды под неё.</p>
-    <form id="projectForm">
-      <div class="field">
-        <label for="f-project">Расскажите о проекте</label>
-        <textarea id="f-project" name="project" placeholder="Кратко опишите задачу, идею или что хотите изменить" required></textarea>
-      </div>
-      <div class="field">
-        <label>Ваши контакты</label>
-        <div class="field-row">
-          <input type="text" name="name" placeholder="Имя" required>
-          <input type="email" name="email" placeholder="Email" required>
-          <input type="tel" name="phone" placeholder="Телефон">
-        </div>
-      </div>
-      <div class="field">
-        <label for="f-source">Откуда вы о нас узнали?</label>
-        <select id="f-source" name="source">
-          <option value="">Выберите вариант</option>
-          <option>Поиск в интернете</option>
-          <option>Социальные сети</option>
-          <option>Рекомендация</option>
-          <option>Другое</option>
-        </select>
-      </div>
-      <label class="consent">
-        <input type="checkbox" name="consent" required>
-        <span>Я согласен(на) с <u>политикой обработки персональных данных</u></span>
-      </label>
-      <details class="privacy-details">
-        <summary>Что это значит?</summary>
-        <p>Мы используем контактные данные только для связи по вашей заявке и не передаём их третьим лицам. Полная версия политики будет опубликована отдельно.</p>
-      </details>
-      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <button type="submit" class="btn btn-primary form-submit">Отправить заявку</button>
-      <p class="form-status" id="formStatus"></p>
-    </form>
+    <!-- Заявки принимает Яндекс Формы (данные хранятся в России). Ссылка на форму — в YA_FORM_URL в скрипте внизу. -->
+    <div class="ya-form" id="yaForm"></div>
+    <div class="form-fallback" id="formFallback">
+      <p>Онлайн-форма скоро появится. Пока свяжитесь с нами напрямую:</p>
+      <a class="btn btn-primary" href="tel:+79119790607">Позвонить: +7 (911) 979-06-07</a>
+      <a class="btn btn-ghost" href="mailto:info@skyvega.ru?subject=%D0%97%D0%B0%D1%8F%D0%B2%D0%BA%D0%B0%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0">Написать на info@skyvega.ru</a>
+    </div>
   </div>
 </div>
 
@@ -932,14 +908,32 @@
   // modal
   const modalOverlay = document.getElementById('modalOverlay');
   const modalClose = document.getElementById('modalClose');
-  const projectForm = document.getElementById('projectForm');
-  const formStatus = document.getElementById('formStatus');
+  // Яндекс Формы: вставьте сюда ссылку на форму (forms.yandex.ru/cloud/…/ или /u/…/).
+  // Пока пусто — в окне показываются телефон и почта.
+  const YA_FORM_URL = '';
+  const yaForm = document.getElementById('yaForm');
+  const formFallback = document.getElementById('formFallback');
+  let yaLoaded = false;
+  function loadYaForm(){
+    if (yaLoaded) return;
+    yaLoaded = true;
+    if (!YA_FORM_URL){ formFallback.classList.add('show'); return; }
+    const url = YA_FORM_URL.replace(/\/?(\?.*)?$/, '/') + '?iframe=1';
+    const id = (YA_FORM_URL.match(/forms\.yandex\.ru\/(?:cloud|u)\/([^/?#]+)/) || [])[1] || 'skyvega';
+    const fr = document.createElement('iframe');
+    fr.src = url; fr.name = 'ya-form-' + id; fr.title = 'Форма заявки'; fr.loading = 'lazy';
+    yaForm.appendChild(fr);
+    const sc = document.createElement('script');
+    sc.src = 'https://forms.yandex.ru/_static/embed.js'; sc.async = true;
+    document.body.appendChild(sc);
+  }
   let lastFocus = null;
   function openModal(){
     lastFocus = document.activeElement;
     modalOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => document.getElementById('f-project').focus(), 50);
+    loadYaForm();
+    setTimeout(() => modalClose.focus(), 50);
   }
   function closeModal(){
     modalOverlay.classList.remove('open');
@@ -951,36 +945,6 @@
   modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && modalOverlay.classList.contains('open')) closeModal(); });
 
-  projectForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    formStatus.className = 'form-status show';
-    formStatus.textContent = 'Отправляем...';
-    const data = new FormData(projectForm);
-    data.append('access_key', '9ab0e4fe-ff4b-438a-baea-b5cf565c8dd8'); // Web3Forms key (public by design)
-    data.append('subject', 'Новая заявка с сайта СКАЙВЕГА');
-    data.append('from_name', 'Сайт СКАЙВЕГА');
-    const btn = projectForm.querySelector('.form-submit');
-    btn.disabled = true;
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 20000);
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST', headers: { 'Accept': 'application/json' }, body: data, signal: ctrl.signal
-      });
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok || json.success !== true) throw new Error(json.message || 'bad response');
-      formStatus.className = 'form-status show ok';
-      formStatus.textContent = 'Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
-      projectForm.reset();
-      setTimeout(closeModal, 2200);
-    } catch (err) {
-      formStatus.className = 'form-status show err';
-      formStatus.textContent = 'Не получилось отправить. Позвоните: +7 (911) 979-06-07 или напишите на info@skyvega.ru';
-    } finally {
-      clearTimeout(timer);
-      btn.disabled = false;
-    }
-  });
 </script>
 
 </body>
